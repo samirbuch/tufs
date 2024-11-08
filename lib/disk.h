@@ -7,6 +7,9 @@
 
 /******************************************************************************/
 
+extern int active;  /* is the virtual disk open (active) */
+extern int handle;      /* file handle to virtual disk       */
+
 /**
  * Create an empty, virtual disk file
  * @param name Name of the virtual disk

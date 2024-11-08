@@ -12,3 +12,11 @@ include_directories(./impl)
 add_executable(tufsimpl
         impl/main.c)
 target_link_libraries(tufsimpl libtufs)
+
+find_library(READLINE_LIBRARY readline)
+find_library(NCURSES_LIBRARY ncurses)
+if(READLINE_LIBRARY AND NCURSES_LIBRARY)
+    target_link_libraries(tufsimpl ${READLINE_LIBRARY} ${NCURSES_LIBRARY})
+else()
+    message(FATAL_ERROR "Readline or ncurses library not found")
+endif()
