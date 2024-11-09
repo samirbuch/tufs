@@ -8,24 +8,24 @@
 /******************************************************************************/
 
 extern int active;  /* is the virtual disk open (active) */
-extern int handle;      /* file handle to virtual disk       */
+extern int handle;      /* tufs_file handle to virtual disk       */
 
 /**
- * Create an empty, virtual disk file
+ * Create an empty, virtual disk tufs_file
  * @param name Name of the virtual disk
  * @return
  */
 int make_disk(char *name);
 
 /**
- * Open a virtual disk file
+ * Open a virtual disk tufs_file
  * @param name Name of the virtual disk
  * @return
  */
-int open_disk(char *name);
+__attribute__((unused)) int open_disk(char *name);
 
 /**
- * Close the active virtual disk file
+ * Close the active virtual disk tufs_file
  * @return
  */
 int close_disk();

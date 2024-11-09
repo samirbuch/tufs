@@ -6,42 +6,53 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <string.h>
-#include "disk.h"
+#include "disk/disk.h"
+#include "commands/commands.h"
 
-char *rl_gets(const char *prompt);
+#include "util/util.h"
+#include "main.h"
+
+static char *prompt;
 
 int main(void) {
-    while(1) {
-        char *line = rl_gets("tufs> ");
+    // Initial prompt
+    prompt = "(tufs repl) > ";
 
-        if(strcmp(line, "exit") == 0) {
+    while (1) {
+        // Read input with the current prompt
+        char *input = readline(prompt);
+
+        if (!input) {
+            // Handle EOF (Ctrl+D) or read error
+            printf("\nExiting...\n");
             break;
         }
+
+        if (*input) {
+            // Add non-empty input to history
+            add_history(input);
+        }
+
+        // Process the input as needed
+        printf("You entered: \"%s\"\n", input);
+
+        // Example: Change the prompt based on user input
+        if (strcmp(input, "change") == 0) {
+            set_prompt("changed_prompt> ");
+        }
+
+        // Free the input buffer allocated by readline
+        free(input);
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
-/* A static variable for holding the line. */
-static char *line_read = (char *) NULL;
+char *get_prompt() {
+    return prompt;
+}
 
-/* Read a string, and return a pointer to it.
-   Returns NULL on EOF. */
-char *rl_gets(const char *prompt) {
-    /* If the buffer has already been allocated,
-       return the memory to the free pool. */
-    if (line_read) {
-        free(line_read);
-        line_read = (char *) NULL;
-    }
-
-    /* Get a line from the user. */
-    line_read = readline(prompt);
-
-    /* If the line has any text in it,
-       save it on the history. */
-    if (line_read && *line_read)
-        add_history(line_read);
-
-    return (line_read);
+// cursed but hey
+void set_prompt(char *p) {
+    prompt = p;
 }
