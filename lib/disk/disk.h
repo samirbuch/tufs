@@ -1,6 +1,8 @@
 #ifndef LIBTUFS_DISK_H
 #define LIBTUFS_DISK_H
 
+#include "tufsdef.h"
+
 /******************************************************************************/
 #define DISK_BLOCKS  8192      /* number of blocks on the disk                */
 #define BLOCK_SIZE   4096      /* block size on "disk"                        */
@@ -57,9 +59,10 @@ int init_fs(char *name);
 
 /**
  * Mount the virtual file system; load filesystem metadata into memory
+ * @param p_fat tufs_fat struct to store FAT data into
  * @return 0 on success, -1 on failure
  */
-int mount_fs();
+int mount_fs(struct tufs_fat *p_fat);
 
 /**
  * Unmount the virtual file system; unload the filesystem metadata from memory.
