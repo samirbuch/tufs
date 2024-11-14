@@ -48,7 +48,7 @@ int unmount_disk(char **args);
 int filesystem_info(char **args);
 
 /**
- * Print some useful information about a tufs_file in the virtual disk
+ * Print some useful information about a tufs_dirent in the virtual disk
  * @param args
  * @return
  */
@@ -62,33 +62,33 @@ int file_info(char **args);
 int list_files(char **args);
 
 /**
- * Create a new tufs_file on the virtual disk
+ * Create a new tufs_dirent on the virtual disk
  * @param args
  * @return
  */
 int create_file(char **args);
 
 /**
- * Remove a tufs_file from the virtual disk
+ * Remove a tufs_dirent from the virtual disk
  * @param args
  * @return
  */
 int remove_file(char **args);
 
 /**
- * Rename a tufs_file on the virtual disk
+ * Rename a tufs_dirent on the virtual disk
  * @param args
  * @return
  */
 int rename_file(char **args);
 
 /**
- * Copy a tufs_file.
+ * Copy a tufs_dirent.
  * <br><br>
  * There are a few different modes: <br>
- * <b>-ei</b> : Copy a tufs_file from your computer to the virtual disk <br>
- * <b>-ie</b> : Copy a tufs_file from the virtual disk to your computer <br>
- * <b>-ii</b> : Copy a tufs_file from the virtual disk to another location on the virtual disk <br>
+ * <b>-ei</b> : Copy a tufs_dirent from your computer to the virtual disk <br>
+ * <b>-ie</b> : Copy a tufs_dirent from the virtual disk to your computer <br>
+ * <b>-ii</b> : Copy a tufs_dirent from the virtual disk to another location on the virtual disk <br>
  * * For obvious reasons, `-ee` does not exist. Use your OS's equivalent to `cp`.
  * @param args
  * @return
@@ -96,7 +96,7 @@ int rename_file(char **args);
 int copy_file(char **args);
 
 /**
- * Print the contents of a tufs_file to stdout
+ * Print the contents of a tufs_dirent to stdout
  * @param args
  * @return
  */

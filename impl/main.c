@@ -12,6 +12,19 @@
 #include "util/util.h"
 #include "main.h"
 
+char *command_names[] = {
+        "init",
+        "open",
+        NULL
+};
+
+int (*command_functions[])(char **args) = {
+        new_disk,
+        mount_disk,
+        NULL
+};
+
+// cursed? cursed. probably shoulda used extern. tough shit
 static char *prompt;
 
 int main(void) {
@@ -31,18 +44,32 @@ int main(void) {
         if (*input) {
             // Add non-empty input to history
             add_history(input);
+        } else {
+            free(input);
+            continue;
         }
 
-        // Process the input as needed
-        printf("You entered: \"%s\"\n", input);
+        char **args = parse(input, " ");
+        char *command = args[0];
 
-        // Example: Change the prompt based on user input
-        if (strcmp(input, "change") == 0) {
-            set_prompt("changed_prompt> ");
+        // Process the input as needed
+        int command_index = index_of(command_names, command);
+        if(command_index != -1) {
+            command_functions[command_index](args);
+        } else {
+            error("Command not found \"%s\"", command);
         }
 
         // Free the input buffer allocated by readline
         free(input);
+
+        // Free each of the args created by the parse function
+        // (each argument is malloc'd)
+        for(int i = 0; args[i] != NULL; i++) {
+            free(args[i]);
+        }
+        // and the array itself is malloc'd.
+        free(args);
     }
 
     return 0;

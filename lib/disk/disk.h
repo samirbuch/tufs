@@ -8,24 +8,24 @@
 /******************************************************************************/
 
 extern int active;  /* is the virtual disk open (active) */
-extern int handle;      /* tufs_file handle to virtual disk       */
+extern int handle;  /* handle to virtual disk  */
 
 /**
- * Create an empty, virtual disk tufs_file
+ * Create an empty, virtual disk
  * @param name Name of the virtual disk
  * @return
  */
 int make_disk(char *name);
 
 /**
- * Open a virtual disk tufs_file
+ * Open a virtual disk
  * @param name Name of the virtual disk
  * @return
  */
-__attribute__((unused)) int open_disk(char *name);
+int open_disk(char *name);
 
 /**
- * Close the active virtual disk tufs_file
+ * Close the active virtual disk
  * @return
  */
 int close_disk();
@@ -47,6 +47,26 @@ int block_write(int block, char *buf);
 int block_read(int block, char *buf);
 
 /******************************************************************************/
+
+/**
+ * Create the disk file, open it, add the necessary metadata, close.
+ * @param name Name of the disk file to initialize
+ * @return 0 on success, -1 on failure.
+ */
+int init_fs(char *name);
+
+/**
+ * Mount the virtual file system; load filesystem metadata into memory
+ * @return 0 on success, -1 on failure
+ */
+int mount_fs();
+
+/**
+ * Unmount the virtual file system; unload the filesystem metadata from memory.
+ * Write any changes to the physical disk.
+ * @return 0 on success, -1 on failure.
+ */
+int unmount_fs();
 
 #endif
 

@@ -8,7 +8,8 @@ add_library(libtufs
         lib/disk/disk.h
         lib/tufsio/tufsio.h
         lib/libtufs.h
-        lib/tufsdef.h)
+        lib/tufsdef.h
+        lib/disk/init_fs.c)
 
 project(tufsimpl C)
 include_directories(./impl)
@@ -16,8 +17,13 @@ add_executable(tufsimpl
         impl/main.c
         impl/util/util.h
         impl/commands/commands.h
-        impl/commands/new.c
-        impl/main.h)
+        impl/commands/new_disk.c
+        impl/main.h
+        impl/util/index_of.c
+        impl/util/parse.c
+        impl/util/logging/logging.h
+        impl/util/logging/logging.c
+        impl/commands/mount_disk.c)
 target_link_libraries(tufsimpl libtufs)
 
 find_library(READLINE_LIBRARY readline)

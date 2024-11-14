@@ -18,13 +18,13 @@ To make things simpler, your file system does not have to support a directory hi
 ### File System Management Functions   
 To manage your file system, you must provide the following three functions:  
 
-     int make_fs(char *disk_name);  
+     int init_fs(char *disk_name);  
      
 This function creates a fresh (and empty) file system on the virtual disk with name disk_name. As part of this function, you should first invoke make_disk(disk_name) to create a new disk. Then, open this disk and write/initialize the necessary meta- information for your file system so that it can be later used (mounted). The function returns 0 on success, and -1 when the disk disk_name could not be created, opened, or properly initialized.  
 
      int mount_fs(char *disk_name);  
      
-This function mounts a file system that is stored on a virtual disk with name disk_name. With the mount operation, a file system becomes "ready for use." You need to open the disk and then load to memory the meta-information that is necessary to handle the file system operations that are discussed below. The function returns 0 on success, and -1 when the disk disk_name could not be opened or when the disk does not contain a valid file system (that you previously created with make_fs).  
+This function mounts a file system that is stored on a virtual disk with name disk_name. With the mount operation, a file system becomes "ready for use." You need to open the disk and then load to memory the meta-information that is necessary to handle the file system operations that are discussed below. The function returns 0 on success, and -1 when the disk disk_name could not be opened or when the disk does not contain a valid file system (that you previously created with init_fs).  
 
      int umount_fs(char *disk_name);  
      
@@ -116,7 +116,7 @@ Design the linkage between physical and logical directories
 Design the file descriptor (fildes) structure and management  
 
 create the File System Management functions  
-- make_fs  
+- init_fs  
 - mount_fs  
 - unmount_fs  
 
