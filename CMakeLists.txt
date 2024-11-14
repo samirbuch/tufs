@@ -10,7 +10,8 @@ add_library(libtufs
         lib/libtufs.h
         lib/tufsdef.h
         lib/disk/init_fs.c
-        lib/disk/mount_fs.c)
+        lib/disk/mount_fs.c
+        lib/tufsio/fs_create.c)
 
 project(tufsimpl C)
 include_directories(./impl)

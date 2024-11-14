@@ -7,7 +7,9 @@
 #include "disk.h"
 #include "tufsdef.h"
 
-int mount_fs(struct tufs_fat *p_fat) {
+struct tufs_fat *p_fat = NULL;
+
+int mount_fs() {
     if(!handle || !active) {
         return TUFS_ERROR;
     }
@@ -22,6 +24,14 @@ int mount_fs(struct tufs_fat *p_fat) {
 
     printf("fat1 loc %d\n", bs->fat1_start);
     printf("fat2 loc %d\n", bs->fat2_start);
+
+    void *p = malloc(FAT_SIZE);
+    if(!p) {
+        perror("malloc");
+        free(p);
+        return TUFS_ERROR;
+    }
+    p_fat = (struct tufs_fat *) p;
 
     block_read(bs->fat1_start, (char *) p_fat);
 

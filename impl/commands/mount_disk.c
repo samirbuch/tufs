@@ -15,11 +15,10 @@ int mount_disk(char **args) {
 
     open_disk(args[1]);
 
-    struct tufs_fat fat;
-    mount_fs(&fat);
+    mount_fs();
 
-    printf("fat index 0: 0x%x\n", fat.table[0]);
-    printf("fat index 1: 0x%x\n", fat.table[1]);
+    printf("fat index 0: 0x%x\n", p_fat->table[0]);
+    printf("fat index 1: 0x%x\n", p_fat->table[1]);
 
     return 0;
 }

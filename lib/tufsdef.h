@@ -49,7 +49,7 @@ typedef struct tufs_dirent {
     uint16_t last_access_date;
     uint16_t last_modified_time;
     uint16_t last_modified_date;
-    uint16_t starting_cluster;
+    uint16_t starting_cluster; // index in the FAT
     uint32_t file_size;
 } file_t;
 

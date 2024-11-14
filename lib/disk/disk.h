@@ -12,6 +12,8 @@
 extern int active;  /* is the virtual disk open (active) */
 extern int handle;  /* handle to virtual disk  */
 
+extern struct tufs_fat *p_fat;
+
 /**
  * Create an empty, virtual disk
  * @param name Name of the virtual disk
@@ -62,7 +64,7 @@ int init_fs(char *name);
  * @param p_fat tufs_fat struct to store FAT data into
  * @return 0 on success, -1 on failure
  */
-int mount_fs(struct tufs_fat *p_fat);
+int mount_fs();
 
 /**
  * Unmount the virtual file system; unload the filesystem metadata from memory.
