@@ -14,22 +14,26 @@
 
 char *command_names[] = {
         "init",
-        "open",
+        "mount",
+        "unmount",
         NULL
 };
 
 int (*command_functions[])(char **args) = {
         new_disk,
         mount_disk,
+        unmount_disk,
         NULL
 };
 
-// cursed? cursed. probably shoulda used extern. tough shit
-static char *prompt;
+char* prompt = NULL;
 
 int main(void) {
     // Initial prompt
-    prompt = "(tufs repl) > ";
+    char *ptext = "(tufs repl) > ";
+    void *p_prompt = calloc(strlen(ptext), sizeof(char));
+    strcpy(p_prompt, ptext);
+    prompt = (char *) p_prompt;
 
     while (1) {
         // Read input with the current prompt
@@ -54,7 +58,7 @@ int main(void) {
 
         // Process the input as needed
         int command_index = index_of(command_names, command);
-        if(command_index != -1) {
+        if (command_index != -1) {
             command_functions[command_index](args);
         } else {
             error("Command not found \"%s\"", command);
@@ -65,7 +69,7 @@ int main(void) {
 
         // Free each of the args created by the parse function
         // (each argument is malloc'd)
-        for(int i = 0; args[i] != NULL; i++) {
+        for (int i = 0; args[i] != NULL; i++) {
             free(args[i]);
         }
         // and the array itself is malloc'd.
@@ -81,5 +85,8 @@ char *get_prompt() {
 
 // cursed but hey
 void set_prompt(char *p) {
-    prompt = p;
+    size_t len = strlen(p);
+    void *p_prompt = realloc(prompt, len);
+    strcpy(prompt, p);
+    prompt = (char *) p_prompt;
 }
