@@ -11,7 +11,8 @@ add_library(libtufs
         lib/tufsdef.h
         lib/disk/init_fs.c
         lib/disk/mount_fs.c
-        lib/tufsio/fs_create.c)
+        lib/tufsio/fs_create.c
+        lib/disk/unmount_fs.c)
 
 project(tufsimpl C)
 include_directories(./impl)
@@ -25,7 +26,9 @@ add_executable(tufsimpl
         impl/util/parse.c
         impl/util/logging/logging.h
         impl/util/logging/logging.c
-        impl/commands/mount_disk.c)
+        impl/commands/mount_disk.c
+        impl/commands/unmount_disk.c
+        impl/main.h)
 target_link_libraries(tufsimpl libtufs)
 
 find_library(READLINE_LIBRARY readline)

@@ -22,10 +22,7 @@ int mount_fs() {
 
     block_read(0, (char *) bs);
 
-    printf("fat1 loc %d\n", bs->fat1_start);
-    printf("fat2 loc %d\n", bs->fat2_start);
-
-    void *p = malloc(FAT_SIZE);
+    void *p = malloc(FAT_SIZE); // This is freed only when the disk is unmounted
     if(!p) {
         perror("malloc");
         free(p);
