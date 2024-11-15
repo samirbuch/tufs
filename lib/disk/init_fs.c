@@ -70,7 +70,7 @@ int init_fs(char *name) {
     // Initialize all entries to 0xFFFF (unused)
     for (int i = 0; i < FAT_SIZE; i++) {
         fat.table[i] = 0xFFFF;
-        fat.unused_blocks[i] = 0;
+        fat.block_status[i] = 0;
     }
     void *f = malloc(BLOCK_SIZE);
     memset(f, 0, BLOCK_SIZE);
@@ -80,6 +80,20 @@ int init_fs(char *name) {
     block_write(bs_instance.fat1_start, (char *) f);
     block_write(bs_instance.fat2_start, (char *) f);
     free(f);
+
+    // Initialize the root directory
+    struct tufs_root root;
+    // Initialize all entries to 0xFFFF (unused)
+    for (int i = 0; i < MAX_FILES; i++) {
+        root.files[i] = (file_t *) 0xFFFF;
+    }
+    void *r = malloc(BLOCK_SIZE);
+    memset(r, 0, BLOCK_SIZE);
+    memcpy(r, &root, sizeof(root));
+
+    // Write the root directory to the disk
+    block_write(bs_instance.root_start, (char *) r);
+    free(r);
 
     free(bs);
 

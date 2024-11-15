@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "disk.h"
-#include "../tufsdef.h"
 
 int active = 0;
 int handle = -1;

@@ -40,12 +40,12 @@ struct boot_sector {
 // in the data section of the file system. The *value* of the element is the next index (block)
 // that contains file data. If that value is 0xFFFF, then the block is the last block of the file.
 //
-// Similarly, with unused_blocks, upon initialization, all elements are set to 0. If an element in the
-// FAT is used, then the corresponding index in unused_blocks is set to 1. When writing a file, the first
-// found instance of 0 in unused_blocks is used as the new block index.
+// Similarly, with block_status, upon initialization, all elements are set to 0. If an element in the
+// FAT is used, then the corresponding index in block_status is set to 1. When writing a file, the first
+// found instance of 0 in block_status is used as the new block index.
 struct tufs_fat {
     uint16_t table[FAT_SIZE];
-    uint8_t unused_blocks[FAT_SIZE];
+    uint8_t block_status[FAT_SIZE];
 };
 
 typedef struct tufs_dirent {
@@ -59,5 +59,9 @@ typedef struct tufs_dirent {
     uint16_t starting_cluster; // index in the FAT
     uint32_t file_size;
 } file_t;
+
+struct tufs_root {
+    file_t *files[MAX_FILES];
+};
 
 #endif //TUFSIMPL_TUFSDEF_H
