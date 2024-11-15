@@ -12,12 +12,12 @@
 /**
  * File descriptor
  */
-typedef int fd_t;
+typedef int tufs_fd_t;
 
 /**
  * File offset
  */
-typedef unsigned int off_t;
+typedef unsigned int tufs_off_t;
 
 /**
  * Open a tufs_dirent on the virtual disk in RW mode. If successful, returns a non-negative integer.
@@ -26,7 +26,7 @@ typedef unsigned int off_t;
  * @param name File to open
  * @return Unique tufs_dirent descriptor for the open tufs_dirent. -1 on failure.
  */
-fd_t fs_open(char *name);
+tufs_fd_t fs_open(char *name);
 
 /**
  * Close a tufs_dirent by FD. A closed tufs_dirent descriptor can no longer be used to access the corresponding
@@ -34,7 +34,7 @@ fd_t fs_open(char *name);
  * @param file_descriptor File descriptor to close
  * @return On success, 0. On failure, -1.
  */
-int fs_close(fd_t file_descriptor);
+int fs_close(tufs_fd_t file_descriptor);
 
 /**
  * Create a new tufs_dirent with the name `name` in the root directory of the virtual disk. The tufs_dirent
@@ -67,7 +67,7 @@ int fs_delete(char *name);
  * read past the end of the tufs_dirent. In the case of failure, -1. This could be because the tufs_dirent descriptor is
  * invalid.
  */
-int fs_read(fd_t file_descriptor, void *buf, size_t nbyte);
+int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte);
 
 /**
  * Write `nbyte` bytes of data to the tufs_dirent referenced by the descriptor from the buffer `buf`.
@@ -87,14 +87,14 @@ int fs_read(fd_t file_descriptor, void *buf, size_t nbyte);
  * than the number of bytes specified by `nbyte` if the disk runs out of space. In the case of
  * failure, -1. This could be because the tufs_dirent descriptor is invalid.
  */
-int fs_write(fd_t file_descriptor, void *buf, size_t nbyte);
+int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte);
 
 /**
  * Get the current size of the tufs_dirent specified by `file_descriptor`
  * @param file_descriptor
  * @return The size, in bytes, of the tufs_dirent. -1 in the event the tufs_dirent descriptor is invalid.
  */
-int fs_get_filesize(fd_t file_descriptor);
+int fs_get_filesize(tufs_fd_t file_descriptor);
 
 /**
  * Sets the tufs_dirent pointer associated with the tufs_dirent descriptor to the argument `offset`.
@@ -103,7 +103,7 @@ int fs_get_filesize(fd_t file_descriptor);
  * @return On success, 0. On failure, -1 if the fd  is invalid, when the offset is further than the
  * size of the tufs_dirent, or when the offset is less than zero.
  */
-int fs_lseek(fd_t file_descriptor, off_t offset);
+int fs_lseek(tufs_fd_t file_descriptor, tufs_off_t offset);
 
 /**
  * Truncate the tufs_dirent associated with the tufs_dirent descriptor to `length` bytes. It is not possible to
@@ -114,6 +114,6 @@ int fs_lseek(fd_t file_descriptor, off_t offset);
  * @return On success, 0. On failure, -1 if the fd is invalid or the length is larger than the current
  * size of the tufs_dirent.
  */
-int fs_truncate(fd_t file_descriptor, off_t length);
+int fs_truncate(tufs_fd_t file_descriptor, tufs_off_t length);
 
 #endif //TUFSIMPL_TUFSIO_H

@@ -27,4 +27,12 @@ int index_of(char **arr, char *str);
  */
 char **parse(char *line, const char delim[]);
 
+/**
+ * Join an array of strings into a single string, separated by `delim`.
+ * @param arr
+ * @param delim
+ * @return Allocated memory containing the joined string. Must be freed when finished!
+ */
+char *join(char **arr, const char delim[]);
+
 #endif //TUFSIMPL_UTIL_H

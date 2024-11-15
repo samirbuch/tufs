@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_C_STANDARD 11)
 
+#add_compile_options(-Wall -Werror)
+add_compile_options(-Wall)
+
 project(libtufs C)
 include_directories(./lib)
 add_library(libtufs
@@ -28,7 +31,11 @@ add_executable(tufsimpl
         impl/util/logging/logging.c
         impl/commands/mount_disk.c
         impl/commands/unmount_disk.c
-        impl/main.h)
+        impl/main.h
+        impl/commands/create_file.c
+        impl/commands/quit_repl.c
+        impl/commands/shell_cmd.c
+        impl/util/join.c)
 target_link_libraries(tufsimpl libtufs)
 
 find_library(READLINE_LIBRARY readline)

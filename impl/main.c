@@ -13,6 +13,8 @@
 #include "main.h"
 
 char *command_names[] = {
+        "quit",
+        "shell", // shell command
         "init",
         "mount",
         "unmount",
@@ -20,6 +22,8 @@ char *command_names[] = {
 };
 
 int (*command_functions[])(char **args) = {
+        quit_repl,
+        shell_cmd,
         new_disk,
         mount_disk,
         unmount_disk,

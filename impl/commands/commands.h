@@ -13,6 +13,13 @@
 int help(char **args);
 
 /**
+ * Execute a command in the native shell rather than in TUFS REPL
+ * @param args
+ * @return
+ */
+int shell_cmd(char **args);
+
+/**
  * Exit the TUFS REPL
  * @param args
  * @return

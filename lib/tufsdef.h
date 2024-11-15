@@ -10,7 +10,10 @@
 #define TUFS_SUCCESS 0
 #define TUFS_ERROR (-1)
 
-#define FAT_SIZE 4096 // number of elements
+#define FAT_SIZE 4096          // number of elements
+#define DISK_BLOCKS  8192      /* number of blocks on the disk                */
+#define BLOCK_SIZE   4096      /* block size on "disk"                        */
+#define MAX_FILES 64          // number of files in the root directory
 
 struct boot_sector {
     uint8_t jump_instruction[3];    // 0-2: Jump instruction
@@ -28,6 +31,10 @@ struct boot_sector {
     uint8_t unused[478];            // 25-509: Unused
     uint16_t signature;             // 510-511: Signature 55 aa
 };
+
+#define EMPTY 0
+#define USED 1
+#define CORRUPT (-1)
 
 // The index of the element of the table corresponds to the physical block number
 // in the data section of the file system. The *value* of the element is the next index (block)
