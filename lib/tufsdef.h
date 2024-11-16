@@ -56,12 +56,12 @@ typedef struct tufs_dirent {
     uint16_t last_access_date;
     uint16_t last_modified_time;
     uint16_t last_modified_date;
-    uint16_t starting_cluster; // index in the FAT
+    uint16_t starting_cluster; // physical location in the data section
     uint32_t file_size;
 } file_t;
 
 struct tufs_root {
-    file_t *files[MAX_FILES];
+    file_t files[MAX_FILES];
 };
 
 #endif //TUFSIMPL_TUFSDEF_H

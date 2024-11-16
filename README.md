@@ -66,11 +66,11 @@ int fs_get_filesize(int fildes);
 
 This function returns the current size of the file pointed to by the file descriptor fildes. In case fildes is invalid, the function returns -1.   
 
-     int fs_lseek(int fildes, off_t offset);  
+     int fs_lseek(int fildes, tufs_off_t offset);  
      
 This function sets the file pointer (the offset used for read and write operations) associated with the file descriptor fildes to the argument offset. It is an error to set the file pointer beyond the end of the file. To append to a file, one can set the file pointer to the end of a file, for example, by calling fs_lseek(fd, fs_get_filesize(fd));. Upon successful completion, a value of 0 is returned. fs_lseek returns -1 on failure. It is a failure when the file descriptor fildes is invalid, when the requested offset is larger than the file size, or when offset is less than zero.   
 
-     int fs_truncate(int fildes, off_t length);  
+     int fs_truncate(int fildes, tufs_off_t length);  
      
 This function causes the file referenced by fildes to be truncated to length bytes in size. If the file was previously larger than this new size, the extra data is lost and the corresponding data blocks on disk (if any) must be freed. It is not possible to extend a file using fs_truncate. When the file pointer is larger than the new length, then it is also set to length (the end of the file). Upon successful completion, a value of 0 is returned. fs_lseek returns -1 on failure. It is a failure when the file descriptor fildes is invalid or the requested length is larger than the file size.   
 

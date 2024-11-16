@@ -17,7 +17,9 @@ char *command_names[] = {
         "shell", // shell command
         "init",
         "mount",
+        "sync",
         "unmount",
+        "touch",
         NULL
 };
 
@@ -26,7 +28,9 @@ int (*command_functions[])(char **args) = {
         shell_cmd,
         new_disk,
         mount_disk,
+        sync_disk,
         unmount_disk,
+        create_file,
         NULL
 };
 

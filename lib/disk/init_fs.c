@@ -70,7 +70,7 @@ int init_fs(char *name) {
     // Initialize all entries to 0xFFFF (unused)
     for (int i = 0; i < FAT_SIZE; i++) {
         fat.table[i] = 0xFFFF;
-        fat.block_status[i] = 0;
+        fat.block_status[i] = EMPTY;
     }
     void *f = malloc(BLOCK_SIZE);
     memset(f, 0, BLOCK_SIZE);
@@ -85,7 +85,7 @@ int init_fs(char *name) {
     struct tufs_root root;
     // Initialize all entries to 0xFFFF (unused)
     for (int i = 0; i < MAX_FILES; i++) {
-        root.files[i] = (file_t *) 0xFFFF;
+        root.files[i] = (file_t) {0};
     }
     void *r = malloc(BLOCK_SIZE);
     memset(r, 0, BLOCK_SIZE);
@@ -97,7 +97,7 @@ int init_fs(char *name) {
 
     free(bs);
 
-    if(close_disk() == TUFS_ERROR) {
+    if (close_disk() == TUFS_ERROR) {
         return TUFS_ERROR;
     }
 

@@ -4,9 +4,10 @@ set(CMAKE_C_STANDARD 11)
 #add_compile_options(-Wall -Werror)
 add_compile_options(-Wall)
 
-project(libtufs C)
+# Will output libtufs.a
+project(tufs C)
 include_directories(./lib)
-add_library(libtufs
+add_library(tufs
         lib/disk/disk.c
         lib/disk/disk.h
         lib/tufsio/tufsio.h
@@ -15,7 +16,8 @@ add_library(libtufs
         lib/disk/init_fs.c
         lib/disk/mount_fs.c
         lib/tufsio/fs_create.c
-        lib/disk/unmount_fs.c)
+        lib/disk/unmount_fs.c
+        lib/disk/sync_fs.c)
 
 project(tufsimpl C)
 include_directories(./impl)
@@ -35,8 +37,9 @@ add_executable(tufsimpl
         impl/commands/create_file.c
         impl/commands/quit_repl.c
         impl/commands/shell_cmd.c
-        impl/util/join.c)
-target_link_libraries(tufsimpl libtufs)
+        impl/util/join.c
+        impl/commands/sync_disc.c)
+target_link_libraries(tufsimpl tufs)
 
 find_library(READLINE_LIBRARY readline)
 find_library(NCURSES_LIBRARY ncurses)

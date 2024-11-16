@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="tufsimpl" type="CMakeRunConfiguration" factoryName="Application" focusToolWindowBeforeRun="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="true" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="tufsimpl" TARGET_NAME="tufsimpl" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="tufsimpl" RUN_TARGET_NAME="tufsimpl">
     <method v="2">
-      <option name="CMake.Explicit.Target" predefinedTargetName="libtufs" />
+      <option name="CMake.Explicit.Target" predefinedTargetName="tufs" />
       <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
     </method>
   </configuration>

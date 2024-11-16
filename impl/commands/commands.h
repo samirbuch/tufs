@@ -41,6 +41,13 @@ int new_disk(char **args);
 int mount_disk(char **args);
 
 /**
+ * Sync the changes in memory with the physical disk without unmounting
+ * @param args
+ * @return
+ */
+int sync_disk(char **args);
+
+/**
  * Unmount and close a disk
  * @param args
  * @return
