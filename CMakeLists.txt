@@ -4,9 +4,12 @@ set(CMAKE_C_STANDARD 11)
 #add_compile_options(-Wall -Werror)
 add_compile_options(-Wall)
 
-# Will output libtufs.a
 project(tufs C)
+
 include_directories(./lib)
+include_directories(./impl)
+
+# Will output libtufs.a
 add_library(tufs
         lib/disk/disk.c
         lib/disk/disk.h
@@ -19,8 +22,12 @@ add_library(tufs
         lib/disk/unmount_fs.c
         lib/disk/sync_fs.c)
 
-project(tufsimpl C)
-include_directories(./impl)
+option(BUILD_TUFSIMPL "Build the tufsimpl executable" ON)
+
+if(NOT BUILD_TUFSIMPL)
+    return()
+endif()
+
 add_executable(tufsimpl
         impl/main.c
         impl/util/util.h
@@ -39,6 +46,7 @@ add_executable(tufsimpl
         impl/commands/shell_cmd.c
         impl/util/join.c
         impl/commands/sync_disc.c)
+
 target_link_libraries(tufsimpl tufs)
 
 find_library(READLINE_LIBRARY readline)

@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/clion+all,jetbrains,cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=clion+all,jetbrains,cmake
 
+# Build and compiled files
+build/
+build-libtufs/
+
 # Virtual disk files
 *.iso
 
