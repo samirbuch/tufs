@@ -45,7 +45,8 @@ add_executable(tufsimpl
         impl/commands/quit_repl.c
         impl/commands/shell_cmd.c
         impl/util/join.c
-        impl/commands/sync_disc.c)
+        impl/commands/sync_disc.c
+        impl/commands/list_files.c)
 
 target_link_libraries(tufsimpl tufs)
 

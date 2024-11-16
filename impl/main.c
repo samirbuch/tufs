@@ -20,6 +20,7 @@ char *command_names[] = {
         "sync",
         "unmount",
         "touch",
+        "ls",
         NULL
 };
 
@@ -31,6 +32,7 @@ int (*command_functions[])(char **args) = {
         sync_disk,
         unmount_disk,
         create_file,
+        list_files,
         NULL
 };
 
