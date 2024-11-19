@@ -8,8 +8,18 @@
 #include "main.h"
 
 int unmount_disk(char **args) {
+    if(!active) {
+        error("There's no disk mounted.");
+        return TUFS_ERROR;
+    }
+
     if(unmount_fs() == TUFS_ERROR) {
         error("There was an error unmounting the disk.");
+        return TUFS_ERROR;
+    }
+
+    if(close_disk() == TUFS_ERROR) {
+        error("There was an error closing the disk.");
         return TUFS_ERROR;
     }
 

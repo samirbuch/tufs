@@ -13,18 +13,23 @@
 int mount_disk(char **args) {
     if(!args[1]) {
         error("No disk name provided");
-        return -1;
+        return TUFS_ERROR;
+    }
+
+    if(active) {
+        error("Disk already mounted");
+        return TUFS_ERROR;
     }
 
     open_disk(args[1]);
 
     if(mount_fs() == TUFS_ERROR) {
         error("Error mounting disk \"%s\"", args[1]);
-        return -1;
+        return TUFS_ERROR;
     }
 
-    printf("fat index 0: 0x%x\n", p_fat->table[0]);
-    printf("fat index 1: 0x%x\n", p_fat->table[1]);
+//    printf("fat index 0: 0x%x\n", p_fat->table[0]);
+//    printf("fat index 1: 0x%x\n", p_fat->table[1]);
 
 //    sprintf(prompt, "(%s) > ", args[1]);
     char *p_str = calloc(64, sizeof(char));
@@ -34,5 +39,5 @@ int mount_disk(char **args) {
 
     success("Successfully mounted disk: \"%s\"", args[1]);
 
-    return 0;
+    return TUFS_SUCCESS;
 }

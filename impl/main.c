@@ -21,6 +21,7 @@ char *command_names[] = {
         "unmount",
         "touch",
         "ls",
+        "stat",
         NULL
 };
 
@@ -33,17 +34,25 @@ int (*command_functions[])(char **args) = {
         unmount_disk,
         create_file,
         list_files,
+        file_info,
         NULL
 };
 
 char* prompt = NULL;
 
-int main(void) {
+int main(int argc, char **argv) {
     // Initial prompt
     char *ptext = "(tufs repl) > ";
     void *p_prompt = calloc(strlen(ptext), sizeof(char));
     strcpy(p_prompt, ptext);
     prompt = (char *) p_prompt;
+
+    // If there's a file name passed in, assume it's a disk image and attempt to mount it.
+//    if (argc > 1) {
+//        if (mount_disk(argv) == TUFS_ERROR) {
+//            error("Failed to mount disk %s", argv[1]);
+//        }
+//    }
 
     while (1) {
         // Read input with the current prompt

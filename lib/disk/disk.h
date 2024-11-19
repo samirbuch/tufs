@@ -14,6 +14,11 @@ extern struct tufs_fat *p_fat;
 extern struct tufs_root *p_root;
 
 /**
+ * Array of open files. Index corresponds to file descriptor.
+ */
+extern file_t *file_table[MAX_FILES];
+
+/**
  * Create an empty, virtual disk
  * @param name Name of the virtual disk
  * @return

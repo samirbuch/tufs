@@ -46,11 +46,18 @@ int fs_create(char *name) {
 //    new_file->name = name;
     strncpy(new_file->name, name, 15);
     new_file->attribute = 0; // Unused. not worried about this being correct
-    new_file->create_time = tm.tm_hour << 11 | tm.tm_min << 5 | tm.tm_sec / 2;
-    new_file->create_date = (tm.tm_year + 1900) << 9 | (tm.tm_mon + 1) << 5 | tm.tm_mday;
-    new_file->last_access_date = new_file->create_date;
-    new_file->last_modified_time = new_file->create_time;
-    new_file->starting_cluster = 4096 + physical_block;
+    new_file->create_time =
+            tm.tm_hour << 11 | tm.tm_min << 5 | tm.tm_sec / 2;
+    new_file->create_date
+        = (tm.tm_year + 1900) << 9 | (tm.tm_mon + 1) << 5 | tm.tm_mday;
+    new_file->last_access_date
+        = new_file->create_date;
+    new_file->last_modified_time
+        = new_file->create_time;
+    new_file->last_modified_date
+        = new_file->create_date;
+    new_file->starting_cluster
+        = 4096 + physical_block;
     new_file->file_size = 0;
 
     // Now that we have the completed struct, copy it into the root directory.
