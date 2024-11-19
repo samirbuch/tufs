@@ -23,7 +23,8 @@ add_library(tufs
         lib/disk/sync_fs.c
         lib/tufsio/fs_open.c
         lib/tufsio/fs_close.c
-        lib/tufsio/fs_get_filesize.c)
+        lib/tufsio/fs_get_filesize.c
+        lib/tufsio/fs_delete.c)
 
 option(BUILD_TUFSIMPL "Build the tufsimpl executable" ON)
 
@@ -51,7 +52,8 @@ add_executable(tufsimpl
         impl/commands/sync_disc.c
         impl/commands/list_files.c
         impl/commands/file_info.c
-        impl/commands/filesystem_info.c)
+        impl/commands/filesystem_info.c
+        impl/commands/remove_file.c)
 
 target_link_libraries(tufsimpl tufs)
 
