@@ -24,7 +24,8 @@ add_library(tufs
         lib/tufsio/fs_open.c
         lib/tufsio/fs_close.c
         lib/tufsio/fs_get_filesize.c
-        lib/tufsio/fs_delete.c)
+        lib/tufsio/fs_delete.c
+        lib/tufsio/fs_rename.c)
 
 option(BUILD_TUFSIMPL "Build the tufsimpl executable" ON)
 
@@ -53,7 +54,8 @@ add_executable(tufsimpl
         impl/commands/list_files.c
         impl/commands/file_info.c
         impl/commands/filesystem_info.c
-        impl/commands/remove_file.c)
+        impl/commands/remove_file.c
+        impl/commands/rename_file.c)
 
 target_link_libraries(tufsimpl tufs)
 

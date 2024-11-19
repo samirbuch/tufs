@@ -24,6 +24,7 @@ char *command_names[] = {
         "stat",
         "fsinfo",
         "rm",
+        "mv",
         NULL
 };
 
@@ -39,6 +40,7 @@ int (*command_functions[])(char **args) = {
         file_info,
         filesystem_info,
         remove_file,
+        rename_file,
         NULL
 };
 

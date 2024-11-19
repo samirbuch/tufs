@@ -56,6 +56,15 @@ int fs_create(char *name);
 int fs_delete(char *name);
 
 /**
+ * Rename a tufs_dirent from `old_name` to `new_name`. The tufs_dirent must exist and the new name must not
+ * already exist on the virtual disk.
+ * @param old_name
+ * @param new_name
+ * @return
+ */
+int fs_rename(char *old_name, char *new_name);
+
+/**
  * Read `nbyte` bytes of data from the tufs_dirent referenced by the descriptor into the buffer `buf`.
  * This function assumes `buf` is large enough to contain `nbyte` bytes.
  * <br><br>
