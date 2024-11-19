@@ -2,6 +2,7 @@
 // Created by Samir Buch on 11/19/24.
 //
 
+#include <stdio.h>
 #include "commands.h"
 #include "util/logging/logging.h"
 #include "libtufs.h"
@@ -26,9 +27,9 @@ int file_info(char **args) {
         return TUFS_ERROR;
     }
 
-    info("%s", args[1]);
-    info("- Size: %d bytes", size);
-    info("- Created at: %02d:%02d:%02d %d-%02d-%02d",
+    printf("%s\n", args[1]);
+    printf("- Size: %d bytes\n", size);
+    printf("- Created at: %02d:%02d:%02d %d-%02d-%02d\n",
          file->create_time >> 11,
          (file->create_time & 0x07E0) >> 5,
          (file->create_time & 0x001F) * 2,
@@ -36,7 +37,7 @@ int file_info(char **args) {
          (file->create_date & 0x01E0) >> 5,
          (file->create_date & 0x001F)
     );
-    info("- Last modified: %02d:%02d:%02d %d-%02d-%02d",
+    printf("- Last modified: %02d:%02d:%02d %d-%02d-%02d\n",
          file->last_modified_time >> 11,
          (file->last_modified_time & 0x07E0) >> 5,
          (file->last_modified_time & 0x001F) * 2,
@@ -44,12 +45,12 @@ int file_info(char **args) {
          (file->last_modified_date & 0x01E0) >> 5,
          (file->last_modified_date & 0x001F)
     );
-    info("- Last accessed: %d-%d-%d",
+    printf("- Last accessed: %d-%d-%d\n",
          (file->last_access_date >> 9) + 1920, // again. wtf
          (file->last_access_date & 0x01E0) >> 5,
          (file->last_access_date & 0x001F)
     );
-    info("- Starting block: %d (0x%x)", file->starting_cluster, file->starting_cluster);
+    printf("- Starting block: %d (0x%x)\n", file->starting_cluster, file->starting_cluster);
 
     if (fs_close(fd) == TUFS_ERROR) {
         error("Failed to close file");

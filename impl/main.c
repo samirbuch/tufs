@@ -22,6 +22,7 @@ char *command_names[] = {
         "touch",
         "ls",
         "stat",
+        "fsinfo",
         NULL
 };
 
@@ -35,6 +36,7 @@ int (*command_functions[])(char **args) = {
         create_file,
         list_files,
         file_info,
+        filesystem_info,
         NULL
 };
 
@@ -49,9 +51,21 @@ int main(int argc, char **argv) {
 
     // If there's a file name passed in, assume it's a disk image and attempt to mount it.
 //    if (argc > 1) {
-//        if (mount_disk(argv) == TUFS_ERROR) {
-//            error("Failed to mount disk %s", argv[1]);
+//        if(open_disk(argv[1]) == TUFS_ERROR) {
+//            error("Failed to open disk: %s", argv[1]);
+//            return 1;
 //        }
+//
+//        if(mount_fs() == TUFS_ERROR) {
+//            error("Failed to mount disk: %s", argv[1]);
+//            return 1;
+//        }
+//
+//        char *p_str = calloc(64, sizeof(char));
+//        snprintf(p_str, 64, "(%s) > ", argv[1]);
+////        set_prompt(p_str);
+//        strcpy(prompt, p_str);
+//        free(p_str);
 //    }
 
     while (1) {
