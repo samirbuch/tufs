@@ -100,10 +100,9 @@ int rename_file(char **args);
  * Copy a tufs_dirent.
  * <br><br>
  * There are a few different modes: <br>
+ * <b>(nothing)</b> : Copy a tufs_dirent from one location to another on the virtual disk <br>
  * <b>-ei</b> : Copy a tufs_dirent from your computer to the virtual disk <br>
  * <b>-ie</b> : Copy a tufs_dirent from the virtual disk to your computer <br>
- * <b>-ii</b> : Copy a tufs_dirent from the virtual disk to another location on the virtual disk <br>
- * * For obvious reasons, `-ee` does not exist. Use your OS's equivalent to `cp`.
  * @param args
  * @return
  */
@@ -115,5 +114,12 @@ int copy_file(char **args);
  * @return
  */
 int display_file_contents(char **args);
+
+/**
+ * Edit the contents of a tufs_dirent
+ * @param args
+ * @return
+ */
+int edit_file(char **args);
 
 #endif //TUFSIMPL_COMMANDS_H

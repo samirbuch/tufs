@@ -12,6 +12,7 @@ extern int handle;  /* handle to virtual disk  */
 
 extern struct tufs_fat *p_fat;
 extern struct tufs_root *p_root;
+extern struct boot_sector *p_boot;
 
 /**
  * Array of open files. Index corresponds to file descriptor.

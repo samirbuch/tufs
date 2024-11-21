@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <string.h>
-#include "disk/disk.h"
+#include "libtufs.h"
 #include "commands/commands.h"
 
 #include "util/util.h"
@@ -25,6 +25,7 @@ char *command_names[] = {
         "fsinfo",
         "rm",
         "mv",
+        "edit",
         NULL
 };
 
@@ -41,6 +42,7 @@ int (*command_functions[])(char **args) = {
         filesystem_info,
         remove_file,
         rename_file,
+        edit_file,
         NULL
 };
 

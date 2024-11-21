@@ -7,8 +7,6 @@
 #include "disk.h"
 
 int unmount_fs() {
-    // TODO: Implement saving in-memory data to disk. For now, this is fine.
-
     if(!handle || !active) {
         perror("disk not mounted");
         return TUFS_ERROR;
@@ -24,6 +22,15 @@ int unmount_fs() {
     p_fat = NULL;
     free(p_root);
     p_root = NULL;
+    free(p_boot);
+    p_boot = NULL;
+    // Zero out the file table entries
+    for(int i = 0; i < MAX_FILES; i++) {
+        if(file_table[i] != NULL) {
+            free(file_table[i]);
+            file_table[i] = NULL;
+        }
+    }
 
     return TUFS_SUCCESS;
 }

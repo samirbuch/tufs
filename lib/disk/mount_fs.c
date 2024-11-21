@@ -9,11 +9,12 @@
 
 struct tufs_fat *p_fat = NULL;
 struct tufs_root *p_root = NULL;
+struct boot_sector *p_boot = NULL;
 file_t *file_table[MAX_FILES] = {0};
 
 int mount_fs() {
     if (!handle || !active) {
-        perror("disk not mounted");
+        perror("disk not opened");
         return TUFS_ERROR;
     }
 
@@ -28,6 +29,8 @@ int mount_fs() {
         free(bs);
         return TUFS_ERROR;
     }
+
+    p_boot = bs;
 
     void *p = malloc(FAT_SIZE); // This is freed only when the disk is unmounted
     if (!p) {
@@ -59,8 +62,6 @@ int mount_fs() {
         free(bs);
         return TUFS_ERROR;
     }
-
-    free(bs);
 
     return TUFS_SUCCESS;
 }
