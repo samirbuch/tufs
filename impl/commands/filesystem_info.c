@@ -28,14 +28,14 @@ int filesystem_info(char **args) {
 
     printf("Disk information:\n");
     printf("Boot sector\n---------\n");
-    printf("- FAT1 Start: %d (0x%08x)\n",
-         bs->fat1_start, bs->fat1_start);
-    printf("- FAT2 Start: %d (0x%08x)\n",
-         bs->fat2_start, bs->fat2_start);
-    printf("- Root Start: %d (0x%08x)\n",
-         bs->root_start, bs->root_start);
-    printf("- Data Start: %d (0x%08x)\n",
-         bs->data_start, bs->data_start);
+    printf("- FAT1 Start: %d (0x%x)\n",
+         bs->fat1_start, bs->fat1_start * 4096);
+    printf("- FAT2 Start: %d (0x%x)\n",
+         bs->fat2_start, bs->fat2_start * 4096);
+    printf("- Root Start: %d (0x%x)\n",
+         bs->root_start, bs->root_start * 4096);
+    printf("- Data Start: %d (0x%x)\n",
+         bs->data_start, bs->data_start * 4096);
 
     free(bs);
 
