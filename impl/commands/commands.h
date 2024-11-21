@@ -122,4 +122,11 @@ int display_file_contents(char **args);
  */
 int edit_file(char **args);
 
+/**
+ * Write to a specific file
+ * @param args First arg file name, rest of the args what you want to write.
+ * @return
+ */
+int write_to_file(char **args);
+
 #endif //TUFSIMPL_COMMANDS_H

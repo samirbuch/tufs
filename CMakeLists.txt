@@ -58,7 +58,9 @@ add_executable(tufsimpl
         impl/commands/filesystem_info.c
         impl/commands/remove_file.c
         impl/commands/rename_file.c
-        impl/commands/edit_file.c)
+        impl/commands/edit_file.c
+        impl/commands/display_file_contents.c
+        impl/commands/write_to_file.c)
 
 target_link_libraries(tufsimpl tufs)
 

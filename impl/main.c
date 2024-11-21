@@ -26,6 +26,8 @@ char *command_names[] = {
         "rm",
         "mv",
         "edit",
+        "cat",
+        "write",
         NULL
 };
 
@@ -43,6 +45,8 @@ int (*command_functions[])(char **args) = {
         remove_file,
         rename_file,
         edit_file,
+        display_file_contents,
+        write_to_file,
         NULL
 };
 
