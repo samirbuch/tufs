@@ -140,6 +140,7 @@ int external_to_internal(char *source, char *destination) {
         fs_close(dest_fd);
         return TUFS_ERROR;
     }
+    info("^ This was supposed to show an error message. Don't worry!");
 
     if(fs_create(destination) == TUFS_ERROR) {
         perror("copy");
