@@ -29,6 +29,7 @@ char *command_names[] = {
         "edit",
         "cat",
         "write",
+        "copy",
         NULL
 };
 
@@ -49,6 +50,7 @@ int (*command_functions[])(char **args) = {
         edit_file,
         display_file_contents,
         write_to_file,
+        copy_file,
         NULL
 };
 

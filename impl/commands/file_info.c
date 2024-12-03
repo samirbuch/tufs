@@ -51,6 +51,7 @@ int file_info(char **args) {
          (file->last_access_date & 0x001F)
     );
     printf("- Starting block: %d (0x%x)\n", file->starting_cluster, file->starting_cluster);
+    printf("- Current pointer index: %d\n", file->data_ptr_idx);
 
     if (fs_close(fd) == TUFS_ERROR) {
         error("Failed to close file");
