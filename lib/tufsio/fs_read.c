@@ -7,6 +7,7 @@
 #include <string.h>
 #include "tufsio.h"
 #include "disk/disk.h"
+#include <math.h>
 
 int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
     // Check if the file descriptor is valid
@@ -37,8 +38,19 @@ int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
         return TUFS_ERROR;
     }
 
+    // Start writing from wherever the file's current pointer is. (file->data_ptr_idx)
+    // Dividing and flooring the file->data_ptr_idx by BLOCK_SIZE will give us the number of blocks
+    // to advance before we find the block that contains the file's current pointer.
+    // For example, if data_ptr_idx is 5000, and BLOCK_SIZE is 4096, then floor(5000 / 4096) = 1.
+    // Hence, advance 1 block from file->starting_cluster to find the block that contains the file's
+    // current pointer.
+    uint32_t blocks_to_advance = floor(file->data_ptr_idx / (double) BLOCK_SIZE);
+    for (int i = 0; i < blocks_to_advance; i++) {
+        current_block = p_fat->table[current_block - data_start_offset];
+    }
+
     // While the current block's data is not 0xFFFF (aka we're not at the last block),
-    while(p_fat->table[current_block - data_start_offset] != 0xFFFF && bytes_read < nbyte) {
+    do {
         // Read the data at this block on the disk.
         int s = block_read(current_block, temp_buffer);
         if(s == TUFS_ERROR) {
@@ -63,7 +75,10 @@ int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
 
         // Update the current block to point to the next block
         current_block = p_fat->table[current_block - data_start_offset];
-    }
+    } while(p_fat->table[current_block - data_start_offset] != 0xFFFF && bytes_read < nbyte);
+
+    // Advance the file's data pointer index by the number of bytes read
+    file->data_ptr_idx += bytes_read;
 
     free(temp_buffer);
 
