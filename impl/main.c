@@ -94,7 +94,8 @@ int main(int argc, char **argv) {
 
         if (*input) {
             // Add non-empty input to history
-            add_history(input);
+//            add_history(input);
+// TODO: This may cause a crash on the cis-linux2 server. Unsure why.
         } else {
             free(input);
             continue;
