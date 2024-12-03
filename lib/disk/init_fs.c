@@ -85,7 +85,8 @@ int init_fs(char *name) {
     // Write the FAT to the disk
     block_write(bs_instance.fat1_start, (char *) f);
     block_write(bs_instance.fat2_start, (char *) f);
-    free(f);
+//    free(f);
+// TODO: free(f) causes a segfault. Why?
     printf("Wrote FAT to disk\n");
 
     // Initialize the root directory
@@ -106,7 +107,8 @@ int init_fs(char *name) {
     printf("Wrote root directory to disk\n");
 
     free(bs);
-    printf("Freeing boot sector\n");
+    printf("Freed boot sector\n");
+    free(f);
 
     if (close_disk() == TUFS_ERROR) {
         return TUFS_ERROR;
