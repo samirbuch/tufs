@@ -1,7 +1,3 @@
-//
-// Created by Samir Buch on 11/8/24.
-//
-
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -58,6 +54,10 @@ int init_fs(char *name) {
 
     // Create temporary buffer size of block
     void *bs = malloc(BLOCK_SIZE);
+    if (!bs) {
+        perror("malloc");
+        return TUFS_ERROR;
+    }
     // Zero it
     memset(bs, 0, BLOCK_SIZE);
     // Copy boot sector struct into buffer
@@ -66,7 +66,10 @@ int init_fs(char *name) {
     printf("Writing boot sector to disk\n");
 
     // Write boot sector to disk
-    block_write(0, (char *) bs);
+    if (block_write(0, (char *) bs) == TUFS_ERROR) {
+        free(bs);
+        return TUFS_ERROR;
+    }
     printf("Wrote boot sector to disk\n");
 
     // Initialize the FAT
@@ -77,15 +80,20 @@ int init_fs(char *name) {
         fat.block_status[i] = EMPTY;
     }
     void *f = malloc(BLOCK_SIZE);
+    if (!f) {
+        free(bs);
+        perror("malloc");
+        return TUFS_ERROR;
+    }
     memset(f, 0, BLOCK_SIZE);
     memcpy(f, &fat, sizeof(fat));
 
     printf("Writing FAT to disk\n");
 
     // Write the FAT to the disk
-    if(block_write(bs_instance.fat1_start, (char *) f) == TUFS_ERROR
-    || block_write(bs_instance.fat2_start, (char *) f) == TUFS_ERROR) {
-        printf("block_write error\n");
+    if (block_write(bs_instance.fat1_start, (char *) f) == TUFS_ERROR ||
+        block_write(bs_instance.fat2_start, (char *) f) == TUFS_ERROR) {
+        free(bs);
         free(f);
         return TUFS_ERROR;
     }
@@ -98,18 +106,30 @@ int init_fs(char *name) {
         root.files[i] = (file_t) {0};
     }
     void *r = malloc(BLOCK_SIZE);
+    if (!r) {
+        free(bs);
+        free(f);
+        perror("malloc");
+        return TUFS_ERROR;
+    }
     memset(r, 0, BLOCK_SIZE);
     memcpy(r, &root, sizeof(root));
 
     printf("Writing root directory to disk\n");
 
     // Write the root directory to the disk
-    block_write(bs_instance.root_start, (char *) r);
-    free(r);
+    if (block_write(bs_instance.root_start, (char *) r) == TUFS_ERROR) {
+        free(bs);
+        free(f);
+        free(r);
+        return TUFS_ERROR;
+    }
     printf("Wrote root directory to disk\n");
 
     free(bs);
-    printf("Freed boot sector\n");
+    free(f);
+    free(r);
+    printf("Freed allocated memory\n");
 
     if (close_disk() == TUFS_ERROR) {
         return TUFS_ERROR;
