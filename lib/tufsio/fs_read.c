@@ -48,6 +48,7 @@ int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
     for (int i = 0; i < blocks_to_advance; i++) {
         current_block = p_fat->table[current_block - data_start_offset];
     }
+    uint32_t leftover_bytes_to_advance = file->data_ptr_idx % BLOCK_SIZE;
 
     // While the current block's data is not 0xFFFF (aka we're not at the last block),
     do {
@@ -57,6 +58,12 @@ int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
             fprintf(stderr, "Error reading block %d (0x%x)\n", current_block, current_block);
             free(temp_buffer);
             return TUFS_ERROR; // return early with an error
+        }
+
+        // If we have leftover bytes to advance, advance the pointer in the buffer by that amount
+        if(leftover_bytes_to_advance > 0) {
+            pointer_in_buf += leftover_bytes_to_advance;
+            leftover_bytes_to_advance = 0;
         }
 
         // Default with the entire block to read.
