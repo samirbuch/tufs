@@ -130,6 +130,7 @@ int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
         // Set the current block's value in the FAT to the next block
         p_fat->table[current_block - data_start_offset] = next_block;
         current_block = next_block;
+        p_fat->block_status[current_block] = USED;
     }
 
     // Now that we've written all we need to write, we can update the file's data pointer index

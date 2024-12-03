@@ -5,9 +5,7 @@
 #ifndef TUFSIMPL_TUFSIO_H
 #define TUFSIMPL_TUFSIO_H
 
-#ifndef size_t
 #include <stddef.h>
-#endif
 
 /**
  * File descriptor
