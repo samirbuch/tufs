@@ -8,9 +8,8 @@
 #include "libtufs.h"
 
 int quit_repl(char **args) {
-    info("Quitting TUFS REPL...");
-
     if (active) {
+        info("Unmounting...");
         if (unmount_fs() == TUFS_ERROR) {
             error("There was an error unmounting the disk. You may experience data loss if you quit forcefully.");
             return TUFS_ERROR;
@@ -18,6 +17,8 @@ int quit_repl(char **args) {
 
         close_disk();
     }
+
+    info("Quitting TUFS REPL...");
 
     exit(0);
 }
