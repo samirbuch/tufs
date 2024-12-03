@@ -59,7 +59,7 @@ char* prompt = NULL;
 int main(int argc, char **argv) {
     // Initial prompt
     char *ptext = "(tufs repl) > ";
-    void *p_prompt = calloc(strlen(ptext), sizeof(char));
+    void *p_prompt = calloc(strlen(ptext) + 1, sizeof(char));
     strcpy(p_prompt, ptext);
     prompt = (char *) p_prompt;
 
@@ -143,7 +143,7 @@ char *get_prompt() {
 // cursed but hey
 void set_prompt(char *p) {
     size_t len = strlen(p);
-    void *p_prompt = realloc(prompt, len);
+    void *p_prompt = realloc(prompt, len + 1);
     strcpy(prompt, p);
     prompt = (char *) p_prompt;
 }
