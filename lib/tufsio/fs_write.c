@@ -7,6 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+
+/**
+ * Find a free block in the FAT table.
+ * @return Block number of the free block. If no free blocks are found, return 0xFFFF.
+ * Requires manual data offset application.
+ */
+uint16_t find_free_block();
 
 /**
  * Write `nbyte` bytes of data to the tufs_dirent referenced by the descriptor from the buffer `buf`.
@@ -56,47 +64,22 @@ int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
         return TUFS_ERROR;
     }
 
-    // Start writing from wherever the file's current pointer is.
+    // Start writing from wherever the file's current pointer is. (file->data_ptr_idx)
+    // Dividing and flooring the file->data_ptr_idx by BLOCK_SIZE will give us the number of blocks
+    // to advance before we find the block that contains the file's current pointer.
+    // For example, if data_ptr_idx is 5000, and BLOCK_SIZE is 4096, then floor(5000 / 4096) = 1.
+    // Hence, advance 1 block from file->starting_cluster to find the block that contains the file's
+    // current pointer.
+    uint32_t blocks_to_advance = floor(file->data_ptr_idx / (double) BLOCK_SIZE);
     // We'll have to copy into the temporary buffer the entire contents of the block.
     // We'll write as much as we can into the current block, then assuming we need more space,
     // we'll find another free block in the FAT and write to that block. Repeat until
     // we reach nbyte.
-
-    // We first need to figure out *where* to write *from*. This is done by taking
-    // a look at the file->data_pointer field. The only thing is, this is not really
-    // great because it only tells us the position in the file, not the position on the disk,
-    // or even which block to start writing from.
-    // Unfortunately the only way I can think of to solve this is to traverse the blocks
-    // allocated to this file, and use strstr to find if the data_pointer is in that block.
-    // TODO: find a better way to figure this out.
-
-    while(1) {
-        byte *b = calloc(BLOCK_SIZE, sizeof(char));
-        if (!b) {
-            perror("malloc");
-            free(b);
-            return TUFS_ERROR;
-        }
-
-        int s = block_read(current_block, b);
-        if (s == TUFS_ERROR) {
-            fprintf(stderr, "Error reading block %d (0x%x)\n", current_block, current_block);
-            free(b);
-            return TUFS_ERROR; // return early with an error
-        }
-
-        if (strstr(b, file->data_pointer) != NULL) {
-            // Found the block to start writing from
-            break;
-        }
-
+    for (int i = 0; i < blocks_to_advance; i++) {
         current_block = p_fat->table[current_block - data_start_offset];
-        free(b);
     }
 
-    // Once we have the block to start writing from, we can start actually writing.
-
-    while(bytes_written < nbyte) {
+    while (bytes_written < nbyte) {
         // Read the data at this block to the temporary buffer.
         int s = block_read(current_block, temp_buffer);
         if (s == TUFS_ERROR) {
@@ -114,11 +97,57 @@ int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
             bytes_to_copy = nbyte - bytes_written;
 
             // We know this is the last block. Set its value in the FAT to 0xFFFF.
-
+            p_fat->table[current_block - data_start_offset] = 0xFFFF;
         }
 
+        // Write to the pointer location in buf
+        memcpy(temp_buffer, pointer_in_buf, bytes_to_copy);
+        pointer_in_buf += bytes_to_copy; // seek the pointer in the buf to the appropriate spot
+        bytes_written += bytes_to_copy; // and increase the number of bytes we've written
 
+        // Write the data back to the block
+        int s2 = block_write(current_block, temp_buffer);
+        if (s2 == TUFS_ERROR) {
+            fprintf(stderr, "Error writing block %d (0x%x)\n", current_block, current_block);
+            free(temp_buffer);
+            return TUFS_ERROR; // return early with an error
+        }
+
+        // If we've written all the bytes we need to write, we can break out of the loop
+        if (bytes_written == nbyte) {
+            break;
+        }
+
+        // If we haven't written all the bytes we need to write, we need to find another block
+        // to write to. We'll find the next free block in the FAT.
+        uint16_t next_block = find_free_block();
+        if (next_block == 0xFFFF) {
+            fprintf(stderr, "No free blocks available\n");
+            free(temp_buffer);
+            return TUFS_ERROR; // return early with an error
+        }
+
+        // Set the current block's value in the FAT to the next block
+        p_fat->table[current_block - data_start_offset] = next_block;
+        current_block = next_block;
     }
 
+    // We can free the pointer storing the file data since we've copied it
+    // to disk by this point.
+    free(temp_buffer);
+
     return TUFS_SUCCESS;
+}
+
+uint16_t find_free_block() {
+    int physical_block;
+    // Loop through the FAT table to find an empty block
+    for (physical_block = 0; physical_block < FAT_SIZE; physical_block++) {
+        if (p_fat->block_status[physical_block] == EMPTY) {
+            // Found an empty block!
+            return physical_block;
+        }
+    }
+
+    return 0xFFFF; // No empty blocks found
 }

@@ -28,6 +28,8 @@ add_library(tufs
         lib/tufsio/fs_rename.c
         lib/tufsio/fs_read.c
         lib/tufsio/fs_write.c)
+# Will link against the math library
+target_link_libraries(tufs m)
 
 option(BUILD_TUFSIMPL "Build the tufsimpl executable" ON)
 
@@ -60,7 +62,8 @@ add_executable(tufsimpl
         impl/commands/rename_file.c
         impl/commands/edit_file.c
         impl/commands/display_file_contents.c
-        impl/commands/write_to_file.c)
+        impl/commands/write_to_file.c
+        impl/commands/list_all_commands.c)
 
 target_link_libraries(tufsimpl tufs)
 

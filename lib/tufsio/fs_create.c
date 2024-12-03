@@ -15,7 +15,7 @@ int fs_create(char *name) {
     int physical_block;
     // Loop through the FAT table to find an empty block
     for (physical_block = 0; physical_block < FAT_SIZE; physical_block++) {
-        if (p_fat->block_status[physical_block] == 0) {
+        if (p_fat->block_status[physical_block] == EMPTY) {
             // Found an empty block!
             break;
         }
@@ -45,7 +45,6 @@ int fs_create(char *name) {
     // Set various attributes about the file
 //    new_file->name = name;
     strncpy(new_file->name, name, 15);
-    new_file->attribute = 0; // Unused. not worried about this being correct
     new_file->create_time =
             tm.tm_hour << 11 | tm.tm_min << 5 | tm.tm_sec / 2;
     new_file->create_date
@@ -59,6 +58,8 @@ int fs_create(char *name) {
     new_file->starting_cluster
         = 4096 + physical_block;
     new_file->file_size = 0;
+    // The data pointer index is used to keep track of where we are in the file.
+    new_file->data_ptr_idx = 0;
 
     // Now that we have the completed struct, copy it into the root directory.
     // We'll start at the beginning of the root directory and loop through until we find an empty entry.

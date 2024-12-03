@@ -45,6 +45,12 @@ int display_file_contents(char **args) {
         return TUFS_ERROR;
     }
 
+    if(fs_close(fd) == TUFS_ERROR) {
+        error("Failed to close file \"%s\"", filename);
+        free(buffer);
+        return TUFS_ERROR;
+    }
+
     printf("%s\n", buffer);
 
     free(buffer);

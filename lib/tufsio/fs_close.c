@@ -18,6 +18,10 @@ int fs_close(tufs_fd_t fd) {
         return TUFS_ERROR;
     }
 
+    // Reset the data pointer so it doesn't store to disk
+    // a memory location.
+    file_table[fd]->data_ptr_idx = 0;
+
     // Clear the file table entry
     file_table[fd] = NULL;
 

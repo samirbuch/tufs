@@ -13,6 +13,7 @@
 #include "main.h"
 
 char *command_names[] = {
+        "help",
         "quit",
         "shell", // shell command
         "init",
@@ -32,6 +33,7 @@ char *command_names[] = {
 };
 
 int (*command_functions[])(char **args) = {
+        list_all_commands,
         quit_repl,
         shell_cmd,
         new_disk,

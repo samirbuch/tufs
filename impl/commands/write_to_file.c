@@ -24,27 +24,22 @@ int write_to_file(char **args) {
 
     char *joined = join(args + 2, " ");
     size_t len = strlen(joined);
-    char *buf = calloc(len, sizeof(char));
-    if(!buf) {
-        perror("malloc");
-        free(buf);
-        return TUFS_ERROR;
-    }
 
     tufs_fd_t fd;
     if((fd = fs_open(filename)) == TUFS_ERROR) {
         perror("write");
-        free(buf);
+        free(joined);
         return TUFS_ERROR;
     }
 
-    if(fs_write(fd, buf, len) == TUFS_ERROR) {
+    if(fs_write(fd, joined, len) == TUFS_ERROR) {
         perror("write");
-        free(buf);
+        free(joined);
         return TUFS_ERROR;
     }
 
     success("Wrote %d bytes to file \"%s\"", len, filename);
+    free(joined);
 
     return TUFS_SUCCESS;
 }

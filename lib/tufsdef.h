@@ -67,7 +67,7 @@ typedef struct tufs_dirent {
     uint16_t starting_cluster;
 
     uint32_t file_size;
-    char *data_pointer; // pointer to a location in the file
+    uint32_t data_ptr_idx; // pointer to a location in the file
 } file_t;
 // I've learned that this struct doesn't actually have to be 32 bytes exactly.
 // hell, the regular stdio FILE struct is 152 bytes on my machine lmao

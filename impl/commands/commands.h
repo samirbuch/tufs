@@ -10,7 +10,7 @@
  * @param args
  * @return
  */
-int help(char **args);
+int list_all_commands(char **args);
 
 /**
  * Execute a command in the native shell rather than in TUFS REPL

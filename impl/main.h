@@ -5,6 +5,8 @@
 #ifndef TUFSIMPL_MAIN_H
 #define TUFSIMPL_MAIN_H
 
+extern char *command_names[];
+
 char *get_prompt();
 
 void set_prompt(char *p);
