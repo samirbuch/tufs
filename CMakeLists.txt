@@ -27,7 +27,9 @@ add_library(tufs
         lib/tufsio/fs_delete.c
         lib/tufsio/fs_rename.c
         lib/tufsio/fs_read.c
-        lib/tufsio/fs_write.c)
+        lib/tufsio/fs_write.c
+        lib/tufsio/fs_lseek.c
+        lib/tufsio/fs_truncate.c)
 # Will link against the math library
 target_link_libraries(tufs m)
 
