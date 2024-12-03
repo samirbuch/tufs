@@ -132,6 +132,11 @@ int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
         current_block = next_block;
     }
 
+    // Now that we've written all we need to write, we can update the file's data pointer index
+    // and the file's size.
+    file->data_ptr_idx += nbyte;
+    file->file_size += nbyte;
+
     // We can free the pointer storing the file data since we've copied it
     // to disk by this point.
     free(temp_buffer);
