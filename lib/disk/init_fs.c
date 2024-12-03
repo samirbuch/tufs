@@ -10,6 +10,7 @@
 #include "tufsdef.h"
 
 int init_fs(char *name) {
+    printf("init_fs: Creating disk\n");
     if (make_disk(name) == TUFS_ERROR) {
         printf("make_disk error\n");
         return TUFS_ERROR;
@@ -62,8 +63,11 @@ int init_fs(char *name) {
     // Copy boot sector struct into buffer
     memcpy(bs, &bs_instance, sizeof(bs_instance));
 
+    printf("Writing boot sector to disk\n");
+
     // Write boot sector to disk
     block_write(0, (char *) bs);
+    printf("Wrote boot sector to disk\n");
 
     // Initialize the FAT
     struct tufs_fat fat;
@@ -76,10 +80,13 @@ int init_fs(char *name) {
     memset(f, 0, BLOCK_SIZE);
     memcpy(f, &fat, sizeof(fat));
 
+    printf("Writing FAT to disk\n");
+
     // Write the FAT to the disk
     block_write(bs_instance.fat1_start, (char *) f);
     block_write(bs_instance.fat2_start, (char *) f);
     free(f);
+    printf("Wrote FAT to disk\n");
 
     // Initialize the root directory
     struct tufs_root root;
@@ -91,11 +98,15 @@ int init_fs(char *name) {
     memset(r, 0, BLOCK_SIZE);
     memcpy(r, &root, sizeof(root));
 
+    printf("Writing root directory to disk\n");
+
     // Write the root directory to the disk
     block_write(bs_instance.root_start, (char *) r);
     free(r);
+    printf("Wrote root directory to disk\n");
 
     free(bs);
+    printf("Freeing boot sector\n");
 
     if (close_disk() == TUFS_ERROR) {
         return TUFS_ERROR;
