@@ -86,6 +86,8 @@ int main(int argc, char **argv) {
         // Read input with the current prompt
         char *input = readline(prompt);
 
+        printf("input: %s\n", input);
+
         if (!input) {
             // Handle EOF (Ctrl+D) or read error
             printf("\nExiting...\n");
@@ -94,19 +96,22 @@ int main(int argc, char **argv) {
 
         if (*input) {
             // Add non-empty input to history
-//            add_history(input);
-// TODO: This may cause a crash on the cis-linux2 server. Unsure why.
+            add_history(input);
+            printf("Added to history\n");
         } else {
             free(input);
             continue;
         }
 
         char **args = parse(input, " ");
+        printf("parsed args\n");
         char *command = args[0];
 
         // Process the input as needed
         int command_index = index_of(command_names, command);
+        printf("command index: %d\n", command_index);
         if (command_index != -1) {
+            printf("command found\n");
             command_functions[command_index](args);
         } else {
             error("Command not found \"%s\"", command);
@@ -114,14 +119,18 @@ int main(int argc, char **argv) {
 
         // Free the input buffer allocated by readline
         free(input);
+        printf("freed input\n");
 
         // Free each of the args created by the parse function
         // (each argument is malloc'd)
         for (int i = 0; args[i] != NULL; i++) {
+            printf("freeing arg %d\n", i);
             free(args[i]);
         }
         // and the array itself is malloc'd.
+        printf("freeing args\n");
         free(args);
+        printf("freed args\n");
     }
 
     return 0;
