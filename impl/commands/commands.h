@@ -129,4 +129,11 @@ int edit_file(char **args);
  */
 int write_to_file(char **args);
 
+/**
+ * Truncate a file to a specific length
+ * @param args
+ * @return
+ */
+int truncate_file(char **args);
+
 #endif //TUFSIMPL_COMMANDS_H
