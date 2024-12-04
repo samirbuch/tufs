@@ -2,18 +2,16 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "disk.h"
 #include "tufsdef.h"
 
 int init_fs(char *name) {
-    printf("init_fs: Creating disk\n");
     if (make_disk(name) == TUFS_ERROR) {
-        printf("make_disk error\n");
         return TUFS_ERROR;
     }
 
     if (open_disk(name) == TUFS_ERROR) {
-        printf("open_disk error\n");
         return TUFS_ERROR;
     }
 
@@ -63,14 +61,11 @@ int init_fs(char *name) {
     // Copy boot sector struct into buffer
     memcpy(bs, &bs_instance, sizeof(bs_instance));
 
-    printf("Writing boot sector to disk\n");
-
     // Write boot sector to disk
     if (block_write(0, (char *) bs) == TUFS_ERROR) {
         free(bs);
         return TUFS_ERROR;
     }
-    printf("Wrote boot sector to disk\n");
 
     // Initialize the FAT
     struct tufs_fat fat;
@@ -79,25 +74,31 @@ int init_fs(char *name) {
         fat.table[i] = 0xFFFF;
         fat.block_status[i] = EMPTY;
     }
-    void *f = malloc(BLOCK_SIZE);
+    void *f = malloc(sizeof(fat)); // 12288 bytes
     if (!f) {
         free(bs);
         perror("malloc");
         return TUFS_ERROR;
     }
-    memset(f, 0, BLOCK_SIZE);
+
+    memset(f, 0, sizeof(fat));
     memcpy(f, &fat, sizeof(fat));
 
-    printf("Writing FAT to disk\n");
-
     // Write the FAT to the disk
-    if (block_write(bs_instance.fat1_start, (char *) f) == TUFS_ERROR ||
-        block_write(bs_instance.fat2_start, (char *) f) == TUFS_ERROR) {
-        free(bs);
-        free(f);
-        return TUFS_ERROR;
+    uint16_t num_blocks_to_write = ceil((double) sizeof(fat) / BLOCK_SIZE);
+    for (int i = 0; i < num_blocks_to_write; i++) {
+        if (block_write(bs_instance.fat1_start + i, (char *) f + i * BLOCK_SIZE) == TUFS_ERROR) {
+            free(bs);
+            free(f);
+            return TUFS_ERROR;
+        }
+
+        if (block_write(bs_instance.fat2_start + i, (char *) f + i * BLOCK_SIZE) == TUFS_ERROR) {
+            free(bs);
+            free(f);
+            return TUFS_ERROR;
+        }
     }
-    printf("Wrote FAT to disk\n");
 
     // Initialize the root directory
     struct tufs_root root;
@@ -115,8 +116,6 @@ int init_fs(char *name) {
     memset(r, 0, BLOCK_SIZE);
     memcpy(r, &root, sizeof(root));
 
-    printf("Writing root directory to disk\n");
-
     // Write the root directory to the disk
     if (block_write(bs_instance.root_start, (char *) r) == TUFS_ERROR) {
         free(bs);
@@ -124,12 +123,10 @@ int init_fs(char *name) {
         free(r);
         return TUFS_ERROR;
     }
-    printf("Wrote root directory to disk\n");
 
     free(bs);
     free(f);
     free(r);
-    printf("Freed allocated memory\n");
 
     if (close_disk() == TUFS_ERROR) {
         return TUFS_ERROR;
