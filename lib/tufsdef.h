@@ -62,7 +62,7 @@ typedef struct tufs_dirent {
     uint16_t last_modified_time;
     uint16_t last_modified_date;
 
-    // Index in the FAT. This index already has the data block offset applied. Read the data at this index in the FAT
+    // Index in the FAT. This index does NOT have the data block offset applied. Read the data at this index in the FAT
     // to get the next block's index. If the data at this location is 0xFFFF, then this is the last block.
     uint16_t starting_cluster;
 

@@ -38,6 +38,12 @@ int write_to_file(char **args) {
         return TUFS_ERROR;
     }
 
+    if(fs_close(fd) == TUFS_ERROR) {
+        perror("write");
+        free(joined);
+        return TUFS_ERROR;
+    }
+
     success("Wrote %d bytes to file \"%s\"", len, filename);
     free(joined);
 

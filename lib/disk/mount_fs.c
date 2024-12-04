@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "disk.h"
 #include "tufsio/tufsio.h"
 
@@ -18,7 +19,7 @@ int mount_fs() {
         return TUFS_ERROR;
     }
 
-    struct boot_sector *bs = malloc(sizeof(struct boot_sector));
+    struct boot_sector *bs = malloc(sizeof(struct boot_sector) >= BLOCK_SIZE ? sizeof(struct boot_sector) : BLOCK_SIZE);
     if (bs == NULL) {
         perror("malloc");
         return TUFS_ERROR;
@@ -40,14 +41,19 @@ int mount_fs() {
     }
     p_fat = (struct tufs_fat *) p;
 
-    if (block_read(bs->fat1_start, (char *) p_fat) == TUFS_ERROR) {
-        perror("failed to read FAT");
-        free(p_fat);
-        free(bs);
-        return TUFS_ERROR;
+    uint16_t num_blocks_to_read = ceil((double) sizeof(struct tufs_fat) / BLOCK_SIZE);
+    for (int i = 0; i < num_blocks_to_read; i++) {
+        if (block_read(bs->fat1_start + i, (char *) p_fat + i * BLOCK_SIZE) == TUFS_ERROR) {
+//            perror("failed to read FAT");
+            fprintf(stderr, "failed to read FAT block %d\n", bs->fat1_start + i);
+            free(p_fat);
+            free(p_root);
+            free(bs);
+            return TUFS_ERROR;
+        }
     }
 
-    void *r = malloc(sizeof(struct tufs_root));
+    void *r = malloc(sizeof(struct tufs_root) >= BLOCK_SIZE ? sizeof(struct tufs_root) : BLOCK_SIZE);
     if (!r) {
         perror("malloc");
         free(r);

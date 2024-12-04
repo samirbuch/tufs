@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 /**
  * Find a free block in the FAT table.
@@ -51,102 +50,109 @@ int fs_write(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
 
     uint16_t data_start_offset = p_boot->data_start;
 
-    // Get the file and its first block in the FAT
-    uint16_t current_block = file->starting_cluster; // The data offset is applied when mounting
+    // Get the LOGICAL starting block (to add data offset LATER)
+    uint16_t current_block = file->starting_cluster;
 
-    char *pointer_in_buf = (char *) buf;
+    char *pointer_in_buf = (char *)buf;
     size_t bytes_written = 0;
 
     byte *temp_buffer = calloc(BLOCK_SIZE, sizeof(char));
     if (!temp_buffer) {
-        perror("malloc");
-        free(temp_buffer);
+        perror("calloc");
         return TUFS_ERROR;
     }
 
-    // Start writing from wherever the file's current pointer is. (file->data_ptr_idx)
-    // Dividing and flooring the file->data_ptr_idx by BLOCK_SIZE will give us the number of blocks
-    // to advance before we find the block that contains the file's current pointer.
-    // For example, if data_ptr_idx is 5000, and BLOCK_SIZE is 4096, then floor(5000 / 4096) = 1.
-    // Hence, advance 1 block from file->starting_cluster to find the block that contains the file's
-    // current pointer.
-    uint32_t blocks_to_advance = floor(file->data_ptr_idx / (double) BLOCK_SIZE);
-    // We'll have to copy into the temporary buffer the entire contents of the block.
-    // We'll write as much as we can into the current block, then assuming we need more space,
-    // we'll find another free block in the FAT and write to that block. Repeat until
-    // we reach nbyte.
-    for (int i = 0; i < blocks_to_advance; i++) {
-        current_block = p_fat->table[current_block - data_start_offset];
-    }
-    tufs_off_t leftover_bytes_to_advance = file->data_ptr_idx % BLOCK_SIZE;
+    // Calculate blocks to advance and leftover bytes
+    uint32_t blocks_to_advance = file->data_ptr_idx / BLOCK_SIZE;
+    size_t leftover_bytes_to_advance = file->data_ptr_idx % BLOCK_SIZE;
 
+    // Advance to the correct block
+    for (uint32_t i = 0; i < blocks_to_advance; i++) {
+        if (current_block == 0xFFFF) {
+            // Need to allocate a new block
+            uint16_t next_block = find_free_block();
+            if (next_block == 0xFFFF) {
+                fprintf(stderr, "No free blocks available\n");
+                free(temp_buffer);
+                return TUFS_ERROR;
+            }
+            p_fat->table[current_block] = next_block;
+            current_block = next_block;
+        } else {
+            current_block = p_fat->table[current_block];
+        }
+    }
+
+    // Start writing data
     while (bytes_written < nbyte) {
-        // Read the data at this block to the temporary buffer.
-        int s = block_read(current_block, temp_buffer);
-        if (s == TUFS_ERROR) {
-            fprintf(stderr, "Error reading block %d (0x%x)\n", current_block, current_block);
+        // Read existing data from current block
+        if (block_read(current_block + data_start_offset, temp_buffer) == TUFS_ERROR) {
+            fprintf(stderr, "Error reading block %d (0x%x)\n", current_block + data_start_offset, current_block + data_start_offset);
             free(temp_buffer);
-            return TUFS_ERROR; // return early with an error
+            return TUFS_ERROR;
         }
 
-        // If we have leftover bytes to advance, advance the pointer in the buffer by that amount
-        if(blocks_to_advance != 0 && leftover_bytes_to_advance > 0) {
-            pointer_in_buf += leftover_bytes_to_advance;
+        // Initialize destination pointer and bytes available in block
+        size_t bytes_available_in_block = BLOCK_SIZE;
+        byte *dest_ptr = temp_buffer;
+
+        // Handle leftover bytes to advance (only applies to the first block)
+        if (leftover_bytes_to_advance > 0) {
+            dest_ptr += leftover_bytes_to_advance;
+            bytes_available_in_block -= leftover_bytes_to_advance;
             leftover_bytes_to_advance = 0;
         }
 
-        // Default with the entire block to write.
-        size_t bytes_to_copy = BLOCK_SIZE;
-        // If the number of bytes that were written + the number of bytes we want to copy
-        // is larger than the total number of bytes requested, calculate how many bytes
-        // are left over. This is a simple subtraction.
-        if (bytes_written + bytes_to_copy > nbyte) {
+        // Determine how many bytes to copy
+        size_t bytes_to_copy = bytes_available_in_block;
+        if (bytes_to_copy > nbyte - bytes_written) {
             bytes_to_copy = nbyte - bytes_written;
-
-            // We know this is the last block. Set its value in the FAT to 0xFFFF.
-            p_fat->table[current_block - data_start_offset] = 0xFFFF;
         }
 
-        // Write to the pointer location in buf
-        memcpy(temp_buffer, pointer_in_buf, bytes_to_copy);
-        pointer_in_buf += bytes_to_copy; // seek the pointer in the buf to the appropriate spot
-        bytes_written += bytes_to_copy; // and increase the number of bytes we've written
+        // Copy data from pointer_in_buf to dest_ptr
+        memcpy(dest_ptr, pointer_in_buf, bytes_to_copy);
+        pointer_in_buf += bytes_to_copy;
+        bytes_written += bytes_to_copy;
 
         // Write the data back to the block
-        int s2 = block_write(current_block, temp_buffer);
-        if (s2 == TUFS_ERROR) {
-            fprintf(stderr, "Error writing block %d (0x%x)\n", current_block, current_block);
+        if (block_write(current_block + data_start_offset, temp_buffer) == TUFS_ERROR) {
+            fprintf(stderr, "Error writing block %d (0x%x)\n", current_block + data_start_offset, current_block + data_start_offset);
             free(temp_buffer);
-            return TUFS_ERROR; // return early with an error
+            return TUFS_ERROR;
         }
 
-        // If we've written all the bytes we need to write, we can break out of the loop
-        if (bytes_written == nbyte) {
+        p_fat->block_status[current_block] = USED;
+
+        // If we've written all the bytes we need to write, set FAT entry to 0xFFFF
+        if (bytes_written >= nbyte) {
+            p_fat->table[current_block] = 0xFFFF;
             break;
         }
 
-        // If we haven't written all the bytes we need to write, we need to find another block
-        // to write to. We'll find the next free block in the FAT.
-        uint16_t next_block = find_free_block();
+        // Get the next block in the chain
+        uint16_t next_block = p_fat->table[current_block];
+
+        // If there is no next block, allocate a new one
         if (next_block == 0xFFFF) {
-            fprintf(stderr, "No free blocks available\n");
-            free(temp_buffer);
-            return TUFS_ERROR; // return early with an error
+            next_block = find_free_block();
+            if (next_block == 0xFFFF) {
+                fprintf(stderr, "No free blocks available\n");
+                free(temp_buffer);
+                return TUFS_ERROR;
+            }
+            p_fat->table[current_block] = next_block;
+            p_fat->table[next_block] = 0xFFFF; // Initialize next block's FAT entry
         }
 
-        // Set the current block's value in the FAT to the next block
-        p_fat->table[current_block - data_start_offset] = next_block;
         current_block = next_block;
-        p_fat->block_status[current_block] = USED;
     }
 
-    // Now that we've written all we need to write, we can update the file's data pointer index
-    // and the file's size.
-    file->data_ptr_idx += nbyte;
-    file->file_size += nbyte;
+    // Update the file's data pointer index and file size
+    file->data_ptr_idx += bytes_written;
+    if (file->data_ptr_idx > file->file_size) {
+        file->file_size = file->data_ptr_idx;
+    }
 
-    // We can free the pointer storing the file data since we've copied it
-    // to disk by this point.
     free(temp_buffer);
 
     return TUFS_SUCCESS;

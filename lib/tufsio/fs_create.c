@@ -12,17 +12,17 @@
 
 // create a new file
 int fs_create(char *name) {
-    int physical_block;
+    int logical_block;
     // Loop through the FAT table to find an empty block
-    for (physical_block = 0; physical_block < FAT_SIZE; physical_block++) {
-        if (p_fat->block_status[physical_block] == EMPTY) {
+    for (logical_block = 0; logical_block < FAT_SIZE; logical_block++) {
+        if (p_fat->block_status[logical_block] == EMPTY) {
             // Found an empty block!
             break;
         }
     }
 
     // If we're at the end of the FAT table, there are no empty blocks
-    if (physical_block == FAT_SIZE) {
+    if (logical_block == FAT_SIZE) {
         perror("disk full");
         // No empty blocks found
         return TUFS_ERROR;
@@ -56,7 +56,7 @@ int fs_create(char *name) {
     new_file->last_modified_date
         = new_file->create_date;
     new_file->starting_cluster
-        = 4096 + physical_block;
+        = logical_block;
     new_file->file_size = 0;
     // The data pointer index is used to keep track of where we are in the file.
     new_file->data_ptr_idx = 0;
@@ -72,7 +72,7 @@ int fs_create(char *name) {
     }
 
     // If we're at the end of the root directory, there are no empty entries
-    if (physical_block == MAX_FILES) {
+    if (logical_block == MAX_FILES) {
         // No empty entries found
         perror("No empty entries found in root directory");
         free(p);

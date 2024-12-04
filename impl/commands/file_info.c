@@ -50,7 +50,7 @@ int file_info(char **args) {
          (file->last_access_date & 0x01E0) >> 5,
          (file->last_access_date & 0x001F)
     );
-    printf("- Starting block: %d (0x%x)\n", file->starting_cluster, file->starting_cluster);
+    printf("- Starting block: %d (0x%x)\n", file->starting_cluster + p_boot->data_start, file->starting_cluster + p_boot->data_start);
     printf("- Current pointer index: %d\n", file->data_ptr_idx);
 
     if (fs_close(fd) == TUFS_ERROR) {

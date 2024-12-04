@@ -7,7 +7,6 @@
 #include <string.h>
 #include "tufsio.h"
 #include "disk/disk.h"
-#include <math.h>
 
 int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
     // Check if the file descriptor is valid
@@ -23,66 +22,92 @@ int fs_read(tufs_fd_t file_descriptor, void *buf, size_t nbyte) {
         return TUFS_ERROR;
     }
 
+    size_t bytes_left_in_file = file->file_size - file->data_ptr_idx;
+    size_t bytes_to_read = (nbyte < bytes_left_in_file) ? nbyte : bytes_left_in_file;
+
     uint16_t data_start_offset = p_boot->data_start;
 
     // Get the file and its first block in the FAT
     uint16_t current_block = file->starting_cluster; // The data offset is applied when mounting
 
-    char *pointer_in_buf = (char *) buf;
+    byte *pointer_in_buf = (byte *) buf;
     size_t bytes_read = 0;
 
     byte *temp_buffer = calloc(BLOCK_SIZE, sizeof(char));
     if(!temp_buffer) {
         perror("malloc");
-        free(temp_buffer);
         return TUFS_ERROR;
     }
 
-    // Start writing from wherever the file's current pointer is. (file->data_ptr_idx)
+    // Start reading from wherever the file's current pointer is. (file->data_ptr_idx)
     // Dividing and flooring the file->data_ptr_idx by BLOCK_SIZE will give us the number of blocks
     // to advance before we find the block that contains the file's current pointer.
     // For example, if data_ptr_idx is 5000, and BLOCK_SIZE is 4096, then floor(5000 / 4096) = 1.
     // Hence, advance 1 block from file->starting_cluster to find the block that contains the file's
     // current pointer.
-    uint32_t blocks_to_advance = floor(file->data_ptr_idx / (double) BLOCK_SIZE);
-    for (int i = 0; i < blocks_to_advance; i++) {
-        current_block = p_fat->table[current_block - data_start_offset];
-    }
+    uint32_t blocks_to_advance = file->data_ptr_idx / BLOCK_SIZE;
     tufs_off_t leftover_bytes_to_advance = file->data_ptr_idx % BLOCK_SIZE;
 
+    for(uint32_t i = 0; i < blocks_to_advance; i++) {
+        if(current_block == 0xFFFF) {
+            fprintf(stderr, "Reached the end of the file before we expected.. this should never have happened!\n");
+            free(temp_buffer);
+            return TUFS_ERROR;
+        }
+
+        current_block = p_fat->table[current_block - data_start_offset];
+    }
+
+    if(bytes_to_read == 0) {
+        free(temp_buffer);
+        return TUFS_SUCCESS; // Nothing to read!
+    }
+
     // While the current block's data is not 0xFFFF (aka we're not at the last block),
-    do {
+    while (bytes_read < bytes_to_read && current_block != 0xFFFF) {
         // Read the data at this block on the disk.
-        int s = block_read(current_block, temp_buffer);
-        if(s == TUFS_ERROR) {
+        if(block_read(current_block + data_start_offset, temp_buffer) == TUFS_ERROR) {
             fprintf(stderr, "Error reading block %d (0x%x)\n", current_block, current_block);
             free(temp_buffer);
             return TUFS_ERROR; // return early with an error
         }
 
-        // If we have leftover bytes to advance, advance the pointer in the buffer by that amount
-        if(blocks_to_advance != 0 && leftover_bytes_to_advance > 0) {
-            pointer_in_buf += leftover_bytes_to_advance;
+        size_t bytes_available_in_block = BLOCK_SIZE;
+        byte *source_ptr = temp_buffer;
+
+        if(leftover_bytes_to_advance > 0) {
+            source_ptr += leftover_bytes_to_advance;
+            bytes_available_in_block -= leftover_bytes_to_advance;
             leftover_bytes_to_advance = 0;
         }
 
-        // Default with the entire block to read.
-        size_t bytes_to_copy = BLOCK_SIZE;
-        // If the number of bytes that were read + the number of bytes we want to copy
-        // is larger than the total number of bytes requested, calculate how many bytes
-        // are left over. This is a simple subtraction.
-        if(bytes_read + bytes_to_copy > nbyte) {
-            bytes_to_copy = nbyte - bytes_read;
+        size_t remaining_file_bytes = file->file_size - (file->data_ptr_idx + bytes_read);
+        // Adjust bytes_available_in_block if it exceeds remaining_file_bytes
+        if(bytes_available_in_block > remaining_file_bytes) {
+            bytes_available_in_block = remaining_file_bytes;
         }
 
+        // Default with the entire block to read.
+        size_t bytes_to_copy = bytes_available_in_block;
+
         // Write to the pointer location in buf
-        memcpy(pointer_in_buf, temp_buffer, bytes_to_copy);
+        memcpy(pointer_in_buf, source_ptr, bytes_to_copy);
         pointer_in_buf += bytes_to_copy; // seek the pointer in the buf to the appropriate spot
         bytes_read += bytes_to_copy; // and increase the number of bytes we've read
 
-        // Update the current block to point to the next block
-        current_block = p_fat->table[current_block - data_start_offset];
-    } while(p_fat->table[current_block - data_start_offset] != 0xFFFF && bytes_read < nbyte);
+        // Exit the loop if we've read all the bytes in this file
+        if(bytes_read >= bytes_to_read || remaining_file_bytes == 0) {
+            break;
+        }
+
+        // Advance the current block to the next block in the chain
+        uint16_t next_block = p_fat->table[current_block];
+        if(next_block == 0xFFFF) {
+            // We've reached the end of the file
+            break;
+        }
+        current_block = next_block;
+    };
 
     // Advance the file's data pointer index by the number of bytes read
     file->data_ptr_idx += bytes_read;

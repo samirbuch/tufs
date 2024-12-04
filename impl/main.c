@@ -134,6 +134,6 @@ char *get_prompt() {
 void set_prompt(char *p) {
     size_t len = strlen(p);
     void *p_prompt = realloc(prompt, len + 1);
-    strcpy(prompt, p);
+    strcpy(p_prompt, p);
     prompt = (char *) p_prompt;
 }

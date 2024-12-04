@@ -32,7 +32,7 @@ int display_file_contents(char **args) {
         return TUFS_ERROR;
     }
 
-    byte *buffer = calloc(filesize, sizeof(byte));
+    byte *buffer = calloc(filesize + 1, sizeof(byte));
     if(!buffer) {
         error("Failed to allocate memory for file buffer");
         free(buffer);

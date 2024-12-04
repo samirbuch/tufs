@@ -14,7 +14,7 @@ int filesystem_info(char **args) {
         return TUFS_ERROR;
     }
 
-    struct boot_sector *bs = malloc(sizeof(struct boot_sector));
+    struct boot_sector *bs = malloc(sizeof(struct boot_sector) > BLOCK_SIZE ? sizeof(struct boot_sector) : BLOCK_SIZE);
     if (bs == NULL) {
         perror("malloc");
         return TUFS_ERROR;
