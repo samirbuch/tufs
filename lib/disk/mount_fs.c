@@ -32,7 +32,7 @@ int mount_fs() {
 
     p_boot = bs;
 
-    void *p = malloc(FAT_SIZE); // This is freed only when the disk is unmounted
+    void *p = malloc(sizeof(struct tufs_fat)); // This is freed only when the disk is unmounted
     if (!p) {
         perror("malloc");
         free(p);
