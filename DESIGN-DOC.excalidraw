@@ -6,8 +6,8 @@
     {
       "id": "Brl05xKI6-wg6reD5xs34",
       "type": "text",
-      "x": 4.240907720310304,
-      "y": 588.4651970825021,
+      "x": -1.3324776361405952,
+      "y": 585.1819877388758,
       "width": 535.1883244102751,
       "height": 120,
       "angle": 0,
@@ -23,11 +23,11 @@
       "index": "aV",
       "roundness": null,
       "seed": 1445838124,
-      "version": 1141,
-      "versionNonce": 1909898540,
+      "version": 1399,
+      "versionNonce": 1140552468,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256519007,
       "link": null,
       "locked": false,
       "text": "• init_fs: make_disk, open_disk, block_write initial\n           metadata (boot_sector, tufs_fat, tufs_root),\n           close_disk.\n• mount_fs: Mount disk metadata into memory\n• sync_fs: Sync changes in VFS memory to OS\n• unmount_fs: Sync if necessary, free metadata from memory",
@@ -43,8 +43,8 @@
     {
       "id": "c4oMhk9s1yysx5TAt2OU_",
       "type": "rectangle",
-      "x": -39.9929107196491,
-      "y": 116.89860765726735,
+      "x": -40.176057110170746,
+      "y": 117.08175404778899,
       "width": 696.1999419696491,
       "height": 1148.776659284545,
       "angle": 0,
@@ -62,8 +62,8 @@
         "type": 3
       },
       "seed": 1938436116,
-      "version": 429,
-      "versionNonce": 578860564,
+      "version": 430,
+      "versionNonce": 1779452948,
       "isDeleted": false,
       "boundElements": [
         {
@@ -71,7 +71,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1733195124693,
+      "updated": 1733286599234,
       "link": null,
       "locked": false
     },
@@ -116,9 +116,9 @@
       "id": "94yJSYnn4SAdOoIPwPq91",
       "type": "rectangle",
       "x": 879.7029280994179,
-      "y": 119.9828930782304,
+      "y": 119.88513754526718,
       "width": 380.3203125,
-      "height": 722.7556282023968,
+      "height": 817.838158311101,
       "angle": 0,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
@@ -134,8 +134,8 @@
         "type": 3
       },
       "seed": 590465580,
-      "version": 468,
-      "versionNonce": 226926636,
+      "version": 526,
+      "versionNonce": 191542676,
       "isDeleted": false,
       "boundElements": [
         {
@@ -143,7 +143,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1733195875919,
+      "updated": 1733286690292,
       "link": null,
       "locked": false
     },
@@ -303,10 +303,10 @@
     {
       "id": "-vkZpN6OMnXW3YHr3Oyvu",
       "type": "rectangle",
-      "x": -14.135926703945302,
-      "y": 415.71608409012174,
+      "x": -14.83981138278591,
+      "y": 368.19512381845107,
       "width": 571.3237832202835,
-      "height": 299.7723756566518,
+      "height": 350.07043163916427,
       "angle": 0,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
@@ -322,21 +322,21 @@
         "type": 3
       },
       "seed": 1904235948,
-      "version": 1149,
-      "versionNonce": 1298109204,
+      "version": 1316,
+      "versionNonce": 1624830996,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256501969,
       "link": null,
       "locked": false
     },
     {
       "id": "qJtnn2prQg71XO7S1VVM4",
       "type": "text",
-      "x": -5.843306014088057,
-      "y": 144.61257347511568,
-      "width": 528.2000122070312,
-      "height": 25,
+      "x": 8.10907450978874,
+      "y": 422.4867399574235,
+      "width": 422.55942392349243,
+      "height": 20,
       "angle": 0,
       "strokeColor": "#e03131",
       "backgroundColor": "transparent",
@@ -350,15 +350,20 @@
       "index": "aq",
       "roundness": null,
       "seed": 1928452756,
-      "version": 195,
-      "versionNonce": 1370213932,
+      "version": 710,
+      "versionNonce": 1985502100,
       "isDeleted": false,
-      "boundElements": [],
-      "updated": 1733194334997,
+      "boundElements": [
+        {
+          "id": "KEmXyWLd368g_-GGCAFZS",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1733256566741,
       "link": null,
       "locked": false,
       "text": "\"extern\" variables (FAT, root, boot, file_table)",
-      "fontSize": 20,
+      "fontSize": 16,
       "fontFamily": 8,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -370,8 +375,8 @@
     {
       "id": "xyvSTUDbS3YOY_boxOFEO",
       "type": "text",
-      "x": 144.37424955124283,
-      "y": 425.6453243754987,
+      "x": 143.38610468056203,
+      "y": 378.34298242589375,
       "width": 264.4200208187103,
       "height": 25,
       "angle": 0,
@@ -387,11 +392,11 @@
       "index": "as",
       "roundness": null,
       "seed": 1093754156,
-      "version": 743,
-      "versionNonce": 463736980,
+      "version": 840,
+      "versionNonce": 446704684,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256508058,
       "link": null,
       "locked": false,
       "text": "disk.h - DISK OPERATIONS",
@@ -407,8 +412,8 @@
     {
       "id": "aEHue3-0JtxRZhti7sIGR",
       "type": "text",
-      "x": 4.46016390674373,
-      "y": 467.47456494116045,
+      "x": -1.1132214497071686,
+      "y": 457.8222794151436,
       "width": 371.9514856338501,
       "height": 100,
       "angle": 0,
@@ -424,8 +429,8 @@
       "index": "at",
       "roundness": null,
       "seed": 938192916,
-      "version": 740,
-      "versionNonce": 932147220,
+      "version": 1008,
+      "versionNonce": 649049132,
       "isDeleted": false,
       "boundElements": [
         {
@@ -433,7 +438,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1733195150606,
+      "updated": 1733256570973,
       "link": null,
       "locked": false,
       "text": "• make_disk: Creates a disk file on OS\n• open_disk: Opens the disk on OS\n• close_disk: Closes the disk on OS\n• block_write: Write to a block in the VFS\n• block_read: Read a block from the VFS",
@@ -449,8 +454,8 @@
     {
       "id": "c--vhwep2Z6KZT5Dumk-W",
       "type": "line",
-      "x": 2.0535794823785523,
-      "y": 573.094218516647,
+      "x": -3.519805874072347,
+      "y": 569.8110091730207,
       "width": 398.6136291494791,
       "height": 0,
       "angle": 0,
@@ -468,11 +473,11 @@
         "type": 2
       },
       "seed": 154861100,
-      "version": 552,
-      "versionNonce": 2004672020,
+      "version": 810,
+      "versionNonce": 1669847956,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256519007,
       "link": null,
       "locked": false,
       "points": [
@@ -524,9 +529,9 @@
     {
       "id": "KSjgNt4Wwwwpnm9zQ3p6a",
       "type": "rectangle",
-      "x": -17.238320748583646,
-      "y": 182.54561893346306,
-      "width": 571.3237832202835,
+      "x": -17.942205427424256,
+      "y": 135.2432769838581,
+      "width": 610.1218765391772,
       "height": 218.0452173187168,
       "angle": 0,
       "strokeColor": "#2f9e44",
@@ -543,28 +548,24 @@
         "type": 3
       },
       "seed": 1674030124,
-      "version": 1164,
-      "versionNonce": 2110571540,
+      "version": 1312,
+      "versionNonce": 1380495660,
       "isDeleted": false,
       "boundElements": [
         {
           "id": "OT5UZxNJ9GF3yn2yOap12",
           "type": "arrow"
-        },
-        {
-          "id": "Q5adtA8YIDPWRjHOxK-Fd",
-          "type": "arrow"
         }
       ],
-      "updated": 1733194227466,
+      "updated": 1733286609016,
       "link": null,
       "locked": false
     },
     {
       "id": "kXTrGqrMDvAUPq85GS7GD",
       "type": "text",
-      "x": 89.29454629297311,
-      "y": 192.119443347044,
+      "x": 88.5906616141325,
+      "y": 144.81710139743905,
       "width": 363.0400048494339,
       "height": 25,
       "angle": 0,
@@ -580,11 +581,11 @@
       "index": "b03",
       "roundness": null,
       "seed": 1926718636,
-      "version": 330,
-      "versionNonce": 1088305068,
+      "version": 426,
+      "versionNonce": 1377278356,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256495448,
       "link": null,
       "locked": false,
       "text": "tufsdef.h - Structure definitions",
@@ -600,9 +601,9 @@
     {
       "id": "TLV6csGiLk1ItQG529Uh6",
       "type": "text",
-      "x": 3.247848045238868,
-      "y": 226.96373341616567,
-      "width": 528.3363440825078,
+      "x": 2.543963366398259,
+      "y": 179.6613914665607,
+      "width": 581.1720388441094,
       "height": 160,
       "angle": 0,
       "strokeColor": "#1e1e1e",
@@ -617,8 +618,8 @@
       "index": "b04",
       "roundness": null,
       "seed": 1183400620,
-      "version": 955,
-      "versionNonce": 1828940052,
+      "version": 1165,
+      "versionNonce": 1295574572,
       "isDeleted": false,
       "boundElements": [
         {
@@ -626,26 +627,26 @@
           "type": "arrow"
         }
       ],
-      "updated": 1733194072542,
+      "updated": 1733286654645,
       "link": null,
       "locked": false,
-      "text": "• struct boot_sector: Contains FS metadata such as fat1,\n                      fat2, root, and data starting blocks.\n• struct tufs_fat: Contains the FAT and each block's status\n                   (FREE, USED, CORRUPT (n.i.))\n• file_t: struct containing file name, starting data block,\n          the file size, and the data pointer offset\n• struct tufs_root: Array of files in the root directory\n(could have been an `extern file_t *files` but whatever)",
+      "text": "• struct boot_sector: Contains FS metadata such as fat1, fat2,\n                      root, and data starting blocks. (block 0)\n• struct tufs_fat: Contains the FAT and each block's status\n                   (FREE, USED, CORRUPT (n.i.)) (block 100)\n• file_t: struct containing file name, starting data block,\n          the file size, and the data pointer offset\n• struct tufs_root: Array of files in the root directory (could\nhave been an `extern file_t *files` but whatever) (block 300)",
       "fontSize": 16,
       "fontFamily": 8,
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "• struct boot_sector: Contains FS metadata such as fat1,\n                      fat2, root, and data starting blocks.\n• struct tufs_fat: Contains the FAT and each block's status\n                   (FREE, USED, CORRUPT (n.i.))\n• file_t: struct containing file name, starting data block,\n          the file size, and the data pointer offset\n• struct tufs_root: Array of files in the root directory (could have been an `extern file_t *files` but whatever)",
+      "originalText": "• struct boot_sector: Contains FS metadata such as fat1, fat2,\n                      root, and data starting blocks. (block 0)\n• struct tufs_fat: Contains the FAT and each block's status\n                   (FREE, USED, CORRUPT (n.i.)) (block 100)\n• file_t: struct containing file name, starting data block,\n          the file size, and the data pointer offset\n• struct tufs_root: Array of files in the root directory (could have been an `extern file_t *files` but whatever) (block 300)",
       "autoResize": false,
       "lineHeight": 1.25
     },
     {
       "id": "OT5UZxNJ9GF3yn2yOap12",
       "type": "arrow",
-      "x": 482.65462576154584,
+      "x": 482.5661954334166,
       "y": 619.1931382270469,
       "width": 135.20197578460227,
-      "height": 317.8890258601992,
+      "height": 337.83435879206104,
       "angle": 0,
       "strokeColor": "#2f9e44",
       "backgroundColor": "transparent",
@@ -661,11 +662,11 @@
         "type": 2
       },
       "seed": 1530755732,
-      "version": 1074,
-      "versionNonce": 413116332,
+      "version": 1207,
+      "versionNonce": 139348652,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194224666,
+      "updated": 1733286612065,
       "link": null,
       "locked": false,
       "points": [
@@ -682,75 +683,16 @@
           -282.076386019493
         ],
         [
-          74.83490782933279,
-          -317.8890258601992
-        ]
-      ],
-      "lastCommittedPoint": null,
-      "startBinding": null,
-      "endBinding": {
-        "elementId": "TLV6csGiLk1ItQG529Uh6",
-        "focus": -0.750875387070071,
-        "gap": 25.90534146313189,
-        "fixedPoint": null
-      },
-      "startArrowhead": null,
-      "endArrowhead": "triangle",
-      "elbowed": false
-    },
-    {
-      "id": "Q5adtA8YIDPWRjHOxK-Fd",
-      "type": "arrow",
-      "x": 387.57674414700955,
-      "y": 660.198195507252,
-      "width": 214.56728964345797,
-      "height": 508.0475244496167,
-      "angle": 0,
-      "strokeColor": "#e03131",
-      "backgroundColor": "transparent",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "strokeStyle": "solid",
-      "roughness": 0,
-      "opacity": 100,
-      "groupIds": [],
-      "frameId": null,
-      "index": "b07",
-      "roundness": {
-        "type": 2
-      },
-      "seed": 979891476,
-      "version": 1153,
-      "versionNonce": 726055188,
-      "isDeleted": false,
-      "boundElements": [],
-      "updated": 1733194367485,
-      "link": null,
-      "locked": false,
-      "points": [
-        [
-          0,
-          0
-        ],
-        [
-          204.7022482618583,
-          -54.536146188349676
-        ],
-        [
-          214.56728964345797,
-          -465.77555849955445
-        ],
-        [
-          138.06942902566607,
-          -508.0475244496167
+          109.14372790720847,
+          -337.83435879206104
         ]
       ],
       "lastCommittedPoint": null,
       "startBinding": null,
       "endBinding": {
         "elementId": "KSjgNt4Wwwwpnm9zQ3p6a",
-        "focus": -1.0550054900958101,
-        "gap": 30.394947875827768,
+        "focus": -0.8068712245950103,
+        "gap": 1,
         "fixedPoint": null
       },
       "startArrowhead": null,
@@ -760,8 +702,8 @@
     {
       "id": "pCfeg525MOHQzOHD1Zhl9",
       "type": "line",
-      "x": 374.9455342927919,
-      "y": 523.4546210641009,
+      "x": 368.86130453361363,
+      "y": 515.3389884591913,
       "width": 15.526190777115858,
       "height": 0,
       "angle": 0,
@@ -781,11 +723,11 @@
         "type": 2
       },
       "seed": 1375483564,
-      "version": 186,
-      "versionNonce": 1482505388,
+      "version": 461,
+      "versionNonce": 1082905876,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256572899,
       "link": null,
       "locked": false,
       "points": [
@@ -807,8 +749,8 @@
     {
       "id": "FTivW-y0Prbs0lBZAb2gg",
       "type": "line",
-      "x": 390.62834892423825,
-      "y": 523.5891132868413,
+      "x": 384.54411916506,
+      "y": 515.4734806819317,
       "width": 0,
       "height": 39.74160060317888,
       "angle": 0,
@@ -828,11 +770,11 @@
         "type": 2
       },
       "seed": 371397908,
-      "version": 198,
-      "versionNonce": 1419981844,
+      "version": 473,
+      "versionNonce": 603460244,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256572899,
       "link": null,
       "locked": false,
       "points": [
@@ -854,8 +796,8 @@
     {
       "id": "b05kyOc5Gmrc9mW37hsIQ",
       "type": "line",
-      "x": 390.5006664342949,
-      "y": 563.2847481936407,
+      "x": 384.41643667511664,
+      "y": 555.1691155887311,
       "width": 14.317463205651734,
       "height": 0,
       "angle": 0,
@@ -875,11 +817,11 @@
         "type": 2
       },
       "seed": 111794732,
-      "version": 314,
-      "versionNonce": 560514860,
+      "version": 589,
+      "versionNonce": 436248596,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733194072542,
+      "updated": 1733256572899,
       "link": null,
       "locked": false,
       "points": [
@@ -982,7 +924,7 @@
       "type": "arrow",
       "x": 665.8682073244844,
       "y": 445.10010926443766,
-      "width": 210.0549992005905,
+      "width": 208.56265175003102,
       "height": 0,
       "angle": 0,
       "strokeColor": "#1e1e1e",
@@ -999,11 +941,11 @@
         "type": 2
       },
       "seed": 730489108,
-      "version": 307,
-      "versionNonce": 1284481580,
+      "version": 511,
+      "versionNonce": 332836396,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733195881418,
+      "updated": 1733286760681,
       "link": null,
       "locked": false,
       "points": [
@@ -1012,7 +954,7 @@
           0
         ],
         [
-          210.0549992005905,
+          208.56265175003102,
           0
         ]
       ],
@@ -1025,8 +967,8 @@
       },
       "endBinding": {
         "elementId": "CJdB_XgRD5CiaYc3_dwXT",
-        "focus": 0.3117192511569582,
-        "gap": 29.998678278941554,
+        "focus": 0.3954341924487152,
+        "gap": 31.686536795427457,
         "fixedPoint": null
       },
       "startArrowhead": "triangle",
@@ -1038,8 +980,8 @@
       "type": "arrow",
       "x": 535.4768497648502,
       "y": 1011.7867653735484,
-      "width": 196.39905701170363,
-      "height": 468.96906389457763,
+      "width": 201.97244236815453,
+      "height": 474.8209874703173,
       "angle": 0,
       "strokeColor": "#1971c2",
       "backgroundColor": "transparent",
@@ -1055,11 +997,11 @@
         "type": 2
       },
       "seed": 983659284,
-      "version": 1078,
-      "versionNonce": 162221332,
+      "version": 1346,
+      "versionNonce": 2105560748,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1733195202809,
+      "updated": 1733256570974,
       "link": null,
       "locked": false,
       "points": [
@@ -1076,8 +1018,8 @@
           -425.0877350025539
         ],
         [
-          -141.0135638561531,
-          -468.96906389457763
+          -146.586949212604,
+          -474.8209874703173
         ]
       ],
       "lastCommittedPoint": null,
@@ -1190,7 +1132,7 @@
       "x": 890.4197725341633,
       "y": 201.54174353562138,
       "width": 360.5037841269507,
-      "height": 629.9992090069177,
+      "height": 728.4970730485226,
       "angle": 0,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
@@ -1206,11 +1148,11 @@
         "type": 3
       },
       "seed": 1946052012,
-      "version": 245,
-      "versionNonce": 958750764,
+      "version": 312,
+      "versionNonce": 1331706924,
       "isDeleted": false,
-      "boundElements": null,
-      "updated": 1733195871830,
+      "boundElements": [],
+      "updated": 1733286694413,
       "link": null,
       "locked": false
     },
@@ -1254,10 +1196,10 @@
     {
       "id": "CJdB_XgRD5CiaYc3_dwXT",
       "type": "text",
-      "x": 905.9218848040165,
-      "y": 245.49869209995552,
+      "x": 906.1173958699429,
+      "y": 245.59339277251365,
       "width": 330.07976856005007,
-      "height": 580,
+      "height": 660,
       "angle": 0,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
@@ -1271,8 +1213,8 @@
       "index": "b0N",
       "roundness": null,
       "seed": 105981972,
-      "version": 1339,
-      "versionNonce": 373764780,
+      "version": 1528,
+      "versionNonce": 1021278740,
       "isDeleted": false,
       "boundElements": [
         {
@@ -1280,26 +1222,26 @@
           "type": "arrow"
         }
       ],
-      "updated": 1733195881131,
+      "updated": 1733286753268,
       "link": null,
       "locked": false,
-      "text": "• help: List all commands\n• quit: Exit REPL\n• shell: Run a command in the parent\n         shell (bash, etc)\n• init: disk.h init_fs\n• mount: disk.h mount_fs\n• sync: disk.h sync_fs\n• unmount: disk.h unmount_fs\n• touch: tufsio.h fs_create\n• ls: read from libtufs extern root\n• stat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Print file info from fs_open\n    4. tufsio.h fs_close\n• fsinfo: read all extern variables\n          from libtufs.h\n• rm: tufsio.h fs_delete\n• mv: tufsio.h fs_rename\n• edit: not fully implemented\n• cat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Create temp buffer\n    4. tufsio.h fs_read filesize\n       bytes into temp buf\n    5. tufsio.h fs_close\n• write: Similar to cat, but with\n         more tufsio.h fs_write usage",
+      "text": "• help: List all commands\n• quit: Exit REPL\n• shell: Run a command in the parent\n         shell (bash, etc)\n• init: disk.h init_fs\n• mount: disk.h mount_fs\n• sync: disk.h sync_fs\n• unmount: disk.h unmount_fs\n• touch: tufsio.h fs_create\n• ls: read from libtufs extern root\n• stat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Print file info from fs_open\n    4. tufsio.h fs_close\n• fsinfo: read all extern variables\n          from libtufs.h\n• rm: tufsio.h fs_delete\n• mv: tufsio.h fs_rename\n• cat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Create temp buffer\n    4. tufsio.h fs_read filesize\n       bytes into temp buf\n    5. tufsio.h fs_close\n• write: Similar to cat, but with\n         more tufsio.h fs_write usage\n• copy: copy within VFS, or copy from\n        OS to VFS, or copy from VFS\n        to OS. heavily utilizes\n        tufsio.h fs_read & fs_write\n• truncate: tufsio.h fs_truncate",
       "fontSize": 16,
       "fontFamily": 8,
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "• help: List all commands\n• quit: Exit REPL\n• shell: Run a command in the parent\n         shell (bash, etc)\n• init: disk.h init_fs\n• mount: disk.h mount_fs\n• sync: disk.h sync_fs\n• unmount: disk.h unmount_fs\n• touch: tufsio.h fs_create\n• ls: read from libtufs extern root\n• stat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Print file info from fs_open\n    4. tufsio.h fs_close\n• fsinfo: read all extern variables\n          from libtufs.h\n• rm: tufsio.h fs_delete\n• mv: tufsio.h fs_rename\n• edit: not fully implemented\n• cat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Create temp buffer\n    4. tufsio.h fs_read filesize\n       bytes into temp buf\n    5. tufsio.h fs_close\n• write: Similar to cat, but with\n         more tufsio.h fs_write usage",
+      "originalText": "• help: List all commands\n• quit: Exit REPL\n• shell: Run a command in the parent\n         shell (bash, etc)\n• init: disk.h init_fs\n• mount: disk.h mount_fs\n• sync: disk.h sync_fs\n• unmount: disk.h unmount_fs\n• touch: tufsio.h fs_create\n• ls: read from libtufs extern root\n• stat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Print file info from fs_open\n    4. tufsio.h fs_close\n• fsinfo: read all extern variables\n          from libtufs.h\n• rm: tufsio.h fs_delete\n• mv: tufsio.h fs_rename\n• cat:\n    1. tufsio.h fs_open\n    2. tufsio.h fs_get_filesize\n    3. Create temp buffer\n    4. tufsio.h fs_read filesize\n       bytes into temp buf\n    5. tufsio.h fs_close\n• write: Similar to cat, but with\n         more tufsio.h fs_write usage\n• copy: copy within VFS, or copy from \n        OS to VFS, or copy from VFS\n        to OS. heavily utilizes\n        tufsio.h fs_read & fs_write\n• truncate: tufsio.h fs_truncate",
       "autoResize": false,
       "lineHeight": 1.25
     },
     {
       "id": "gRAxGbcLdyXiMN7T40XZo",
       "type": "rectangle",
-      "x": 702.1450909476324,
-      "y": 876.0783479978181,
+      "x": 702.3058481784927,
+      "y": 964.9758667809399,
       "width": 563.0323047924886,
-      "height": 379.925532819859,
+      "height": 291.0280140367371,
       "angle": 0,
       "strokeColor": "#1971c2",
       "backgroundColor": "#a5d8ff",
@@ -1315,21 +1257,21 @@
         "type": 3
       },
       "seed": 925419180,
-      "version": 218,
-      "versionNonce": 1916695060,
+      "version": 251,
+      "versionNonce": 643876500,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1733196052052,
+      "updated": 1733286766309,
       "link": null,
       "locked": false
     },
     {
       "id": "aBJciY9BZtn8dtR7XTVce",
       "type": "text",
-      "x": 725.0609157889778,
-      "y": 948.3112500419136,
-      "width": 529.26699168899,
-      "height": 280,
+      "x": 714.3504652829142,
+      "y": 1047.1518287036417,
+      "width": 542.9512539574426,
+      "height": 153.87826819450333,
       "angle": 0,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "#a5d8ff",
@@ -1343,15 +1285,15 @@
       "index": "b0Q",
       "roundness": null,
       "seed": 1460719660,
-      "version": 724,
-      "versionNonce": 840861612,
+      "version": 913,
+      "versionNonce": 2006646060,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1733196089386,
+      "updated": 1733286773936,
       "link": null,
       "locked": false,
-      "text": "libtufs can function independently\nof tufsimpl. I use CMake to build\nboth of these projects, building\nlibtufs as a library and tufsimpl\nas an executable linking against\nlibtufs. I encourage you to copy\nthe compiled libtufs.a and use it\nin your own testing executable!",
-      "fontSize": 28,
+      "text": "libtufs can function independently of tufsimpl.\nI use CMake to build both of these projects,\nbuilding libtufs as a library and tufsimpl as an\nexecutable linking against libtufs. I encourage\nyou to copy the compiled libtufs.a and use it in\nyour own testing executable!",
+      "fontSize": 20.517102425933786,
       "fontFamily": 8,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -1363,8 +1305,8 @@
     {
       "id": "4WFE9Bgr0mYpQgL2uEuU7",
       "type": "text",
-      "x": 935.6168622466462,
-      "y": 895.0168990643533,
+      "x": 944.6270017452841,
+      "y": 987.810838700974,
       "width": 79.199951171875,
       "height": 45,
       "angle": 0,
@@ -1380,11 +1322,11 @@
       "index": "b0R",
       "roundness": null,
       "seed": 298421420,
-      "version": 52,
-      "versionNonce": 342422676,
+      "version": 158,
+      "versionNonce": 1442433940,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1733196101203,
+      "updated": 1733286779719,
       "link": null,
       "locked": false,
       "text": "Note",
@@ -1396,6 +1338,65 @@
       "originalText": "Note",
       "autoResize": true,
       "lineHeight": 1.25
+    },
+    {
+      "id": "KEmXyWLd368g_-GGCAFZS",
+      "type": "arrow",
+      "x": 381.80770664116517,
+      "y": 653.3317264609599,
+      "width": 145.59477449021028,
+      "height": 212.8200201792282,
+      "angle": 0,
+      "strokeColor": "#e03131",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "cross-hatch",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b0S",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1974901268,
+      "version": 389,
+      "versionNonce": 728746260,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1733256566741,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          145.59477449021028,
+          -32.928865411285756
+        ],
+        [
+          135.07714739212292,
+          -156.1288804399985
+        ],
+        [
+          56.533895962563406,
+          -212.8200201792282
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": null,
+      "endBinding": {
+        "elementId": "qJtnn2prQg71XO7S1VVM4",
+        "focus": -0.9231580971798601,
+        "gap": 7.673104170447402,
+        "fixedPoint": null
+      },
+      "startArrowhead": null,
+      "endArrowhead": "triangle",
+      "elbowed": false
     }
   ],
   "appState": {
